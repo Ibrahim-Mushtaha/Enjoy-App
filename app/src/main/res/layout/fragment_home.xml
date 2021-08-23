@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        tools:context=".ui.fragment.HomeFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:background="@color/background_color"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_below="@id/toolbar_basic">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color">
+
+                <include
+                    android:id="@+id/toolbarView"
+                    layout="@layout/toolbar_layout" />
+
+
+                <ImageView
+                    android:id="@+id/tvImageSliderBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="324dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_movie_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/shape_main_background"
+                    android:scaleType="centerCrop"
+                    android:alpha="0.1"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvImageSliderBackground"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvImageSliderBackground" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="342dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="@dimen/margin_32"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/margin_8"
+                    android:maxHeight="265dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="@dimen/margin_16"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:itemCount="3"
+                        tools:layout_editor_absoluteY="2dp"
+                        tools:listitem="@layout/item_menu" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12sp"
+                    android:fontFamily="@font/cairo_regular"
+                    android:gravity="bottom"
+                    android:text="Pupular"
+                    android:textColor="@color/main_text"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+                <TextView
+                    android:id="@+id/btn_more_pupuler"
+                    style="@style/focusInClick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12sp"
+                    android:layout_marginEnd="4dp"
+                    android:drawableRight="@drawable/ic_arraw_right"
+                    android:drawablePadding="16sp"
+                    android:fontFamily="@font/cairo_regular"
+                    android:padding="4dp"
+                    android:text="More"
+                    android:textColor="@color/main_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="@+id/view_pager"
+                    app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pupular_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="300dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    tools:itemCount="6"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:listitem="@layout/item_pupuler" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12sp"
+                    android:layout_marginTop="12sp"
+                    android:fontFamily="@font/cairo_regular"
+                    android:gravity="bottom"
+                    android:text="UpComing"
+                    android:textColor="@color/main_text"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view_pager"
+                    app:layout_constraintTop_toBottomOf="@+id/pupular_list" />
+
+
+                <TextView
+                    android:id="@+id/btn_more_upcoming"
+                    style="@style/focusInClick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:drawableRight="@drawable/ic_arraw_right"
+                    android:drawablePadding="16sp"
+                    android:fontFamily="@font/cairo_regular"
+                    android:padding="4dp"
+                    android:text="More"
+                    android:textColor="@color/main_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintEnd_toEndOf="@+id/view_pager" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/upcoming_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="300dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    tools:itemCount="6"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:listitem="@layout/item_upcoming" />
+
+                <Button
+                    android:id="@+id/btn_click"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="24sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24sp"
+                    android:text="@string/hello_blank_fragment"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upcoming_list" />
+
+                <Button
+                    android:id="@+id/btn_click2"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/btn_click"
+                    android:layout_marginTop="44dp"
+                    android:text="@string/hello_blank_fragment"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_click"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/btn_click"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_click" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="205dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
