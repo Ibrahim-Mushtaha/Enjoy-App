@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         app:cardCornerRadius="16dp"
         app:cardElevation="6dp"
+        android:backgroundTint="@color/purple"
         android:layout_marginHorizontal="84dp"
         android:layout_marginVertical="@dimen/margin_8"
         >

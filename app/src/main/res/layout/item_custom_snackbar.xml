@@ -48,7 +48,7 @@
             app:rcAnimationEnable="true"
             app:rcAnimationSpeedScale="5"
             app:rcMax="100"
-            app:rcProgressColor="@color/orange"
+            app:rcProgressColor="@color/purple"
             app:rcRadius="8sp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

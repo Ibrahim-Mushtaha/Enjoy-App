@@ -31,7 +31,7 @@
              android:paddingStart="8dp"
              android:paddingEnd="8dp"
              android:text="The Forgotte"
-             android:textColor="@color/main_text"
+             android:textColor="@color/white"
              android:textSize="16sp"
              android:textStyle="bold"
              android:layout_centerInParent="true"

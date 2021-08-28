@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:visibility="visible"
-            app:indicatorColor="@color/orange"
+            app:indicatorColor="@color/purple"
             app:indicatorName="BallSpinFadeLoaderIndicator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

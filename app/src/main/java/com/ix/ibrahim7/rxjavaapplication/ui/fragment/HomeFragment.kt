@@ -76,7 +76,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         super.onViewCreated(view, savedInstanceState)
 
         setUpViewpager()
-        requireActivity().setToolbarView(mBinding.toolbarView, "Home", true) {}
+      //  requireActivity().setToolbarView(mBinding.toolbarView, "Home", true) {}
 
         menu_adapter.data.add(MenuItem(1,"POPULAR",true))
         menu_adapter.data.add(MenuItem(1,"NOW",false))
@@ -87,13 +87,13 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         }
 
 
-        mBinding.btnClick.setOnClickListener {
+        /*mBinding.btnClick.setOnClickListener {
             viewModel.getPupular()
         }
 
         mBinding.btnClick2.setOnClickListener {
             Log.e("eee allData",array.toString())
-        }
+        }*/
 
         mBinding.btnMorePupuler.setOnClickListener {
             val bundle = Bundle().apply {
@@ -188,11 +188,11 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
             Glide.with(requireActivity())
                 .load(R.drawable.ic_slider1)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(bitmapTransform(BlurTransformation(16, 1)))
+                .apply(bitmapTransform(BlurTransformation(12, 1)))
                 .into(mBinding.tvImageSliderBackground)
             Glide.with(requireActivity())
                 .load(R.drawable.shape_main_background)
-                .apply(bitmapTransform(BlurTransformation(16, 8)))
+                .apply(bitmapTransform(BlurTransformation(12, 8)))
                 .into(mBinding.imageView2)
             adapter = pupularAdapter
             setPageTransformer(ZoomAnimation())

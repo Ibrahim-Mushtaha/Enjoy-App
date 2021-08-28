@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_800">#222032</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ic_app_logo_background">#1C1A29</color>
 
 
-    <color name="background_color">#F8F8F8</color>
-    <color name="background_color2">#F8F8F8</color>
-    <color name="main_text">#333333</color>
-    <color name="sub_text">#666666</color>
-    <color name="hint_text">#F3F3F3</color>
-    <color name="orange">#FF6B03</color>
+    // main color
+    <color name="purple">#1C1A29</color>
+    <color name="purple_200">#222032</color>
+    <color name="Light_purple">#29263C</color>
+    <color name="header">#434340</color>
+    <color name="subtext">#949494</color>
+    <color name="green">#00C269</color>
+    <color name="red">#D70B17</color>
+    <color name="red_lite">#FFF3F2</color>
+    <color name="cyan_blue">#E7F0FF</color>
+    <color name="gary">#FCFCFC</color>
+    <color name="gray_lite">#E8E8E8</color>
+    <color name="gray_whisper">#EEEEEE</color>
+
+    //drawable-color
+    <color name="border">#EEF1F5</color>
 
 </resources>

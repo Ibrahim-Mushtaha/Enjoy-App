@@ -10,14 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color"
+        android:background="@color/purple"
         tools:context=".ui.fragment.DetailsFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_basic"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/background_color"
+            android:background="@color/purple"
             app:title=" ">
 
             <LinearLayout
@@ -54,14 +54,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:background="@color/background_color"
+            android:background="@color/purple"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_below="@id/toolbar_basic">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background_color">
+                android:background="@color/purple">
 
 
                 <androidx.cardview.widget.CardView
@@ -71,8 +71,8 @@
                     android:layout_marginTop="32dp"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="4dp"
-                    android:background="@color/background_color"
-                    android:backgroundTint="@color/background_color"
+                    android:background="@color/purple"
+                    android:backgroundTint="@color/purple"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:background="@drawable/shape_background"
+                    android:background="@drawable/ic_liner_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/guideline3">
 
@@ -114,7 +114,7 @@
                     android:paddingEnd="8dp"
                     android:text="The Forgotten
 Hours"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -144,7 +144,7 @@ Hours"
                     android:paddingEnd="12sp"
                     android:text="The Forgotten
 Hours"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -175,7 +175,7 @@ Hours"
                     android:paddingStart="6dp"
                     android:paddingEnd="8dp"
                     android:text="Literary genres"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line5" />
@@ -206,7 +206,7 @@ Hours"
                     android:paddingStart="6dp"
                     android:paddingEnd="8dp"
                     android:text="Similar Movie"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/genres_list" />
@@ -239,7 +239,7 @@ Hours"
                     android:paddingStart="6dp"
                     android:paddingEnd="8dp"
                     android:text="Recommendations Movie"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/similar_list" />
@@ -273,7 +273,7 @@ Hours"
                     android:paddingStart="6dp"
                     android:paddingEnd="8dp"
                     android:text="Top Review"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recommendations_list" />

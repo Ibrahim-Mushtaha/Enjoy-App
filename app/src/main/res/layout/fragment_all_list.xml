@@ -10,14 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color"
+        android:background="@color/purple"
         tools:context=".ui.fragment.AllListFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_basic"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/background_color"
+            android:background="@color/purple"
             app:title=" ">
 
             <LinearLayout
@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/cairo_regular"
                         android:text="Featured"
-                        android:textColor="@color/main_text"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,14 +78,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:background="@color/background_color"
+            android:background="@color/purple"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_below="@id/toolbar_basic">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background_color">
+            android:background="@color/purple">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_item"

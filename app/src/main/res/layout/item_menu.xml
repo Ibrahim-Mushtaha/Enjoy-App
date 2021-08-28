@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/item_menu_icon"
-            app:tint="@color/main_text"
+            app:tint="@color/white"
             android:src="@drawable/ic_baseline_home_black"
             android:padding="8dp"
             android:visibility="gone"
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:text="Pupular"
             android:textAlignment="center"
-            android:textColor="@color/main_text"
+            android:textColor="@color/white"
             android:textSize="14dp"
             android:textStyle="bold" />
 

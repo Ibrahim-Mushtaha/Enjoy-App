@@ -63,7 +63,7 @@
                     android:gravity="start"
                     android:text="Home"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/main_text"
+                    android:textColor="@color/white"
                     android:textDirection="locale"
                     android:textSize="24sp"
                     app:layout_constraintStart_toEndOf="@+id/btnBack"

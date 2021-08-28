@@ -108,7 +108,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                                 requireContext(),
                                 IMAGE_URL + movie.posterPath,
                                 tvImage,
-                                R.color.background_color
+                                R.color.purple
                             )
                             genres_adapter.data.addAll(movie.genres!!)
                             genres_adapter.notifyDataSetChanged()

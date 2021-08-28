@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2sp"
         android:paddingBottom="4dp"
-        android:layout_marginEnd="2sp">
+        android:layout_marginEnd="2sp"
+        android:background="@color/purple">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/tv_image"
@@ -40,7 +41,7 @@
             android:paddingEnd="8dp"
             android:text="The Forgotten
 Hours"
-            android:textColor="@color/main_text"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +62,7 @@ Hours"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="$ 4.99"
-            android:textColor="@color/main_text"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
