@@ -78,9 +78,12 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         setUpViewpager()
       //  requireActivity().setToolbarView(mBinding.toolbarView, "Home", true) {}
 
-        menu_adapter.data.add(MenuItem(1,"POPULAR",true))
-        menu_adapter.data.add(MenuItem(1,"NOW",false))
-        menu_adapter.data.add(MenuItem(1,"SOON",false))
+        menu_adapter.data.apply {
+            clear()
+            add(MenuItem(1,"POPULAR",true))
+            add(MenuItem(1,"NOW",false))
+            add(MenuItem(1,"SOON",false))
+        }
 
         mBinding.listMenu.apply {
             adapter=menu_adapter

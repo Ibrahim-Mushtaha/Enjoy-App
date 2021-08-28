@@ -72,7 +72,7 @@
                     android:layout_marginVertical="@dimen/margin_8"
                     android:maxHeight="265dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="16sp"
+                    android:paddingBottom="8dp"
                     app:layout_constraintTop_toBottomOf="@+id/view_pager">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -80,11 +80,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="@dimen/margin_8"
+                        android:layout_marginHorizontal="@dimen/margin_16"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:itemCount="3"
@@ -100,6 +99,7 @@
                     android:fontFamily="@font/cairo_regular"
                     android:gravity="bottom"
                     android:text="Pupular"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -118,6 +118,7 @@
                     android:fontFamily="@font/cairo_regular"
                     android:padding="4dp"
                     android:text="More"
+                    android:visibility="gone"
                     android:textColor="@color/gray_lite"
                     android:textSize="16sp"
                     android:textStyle="bold"

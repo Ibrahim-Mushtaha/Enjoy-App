@@ -10,22 +10,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2sp"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:layout_marginHorizontal="@dimen/margin_4"
+        android:background="@color/purple"
         android:paddingBottom="4dp"
-        android:layout_marginEnd="2sp"
-        android:background="@color/purple">
+        android:paddingHorizontal="2dp"
+        >
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/tv_image"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/tvImageContainer"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="center"
-            android:elevation="4dp"
+            android:backgroundTint="@color/purple"
+            app:cardCornerRadius="@dimen/radius_8"
+            app:cardElevation="@dimen/elevation_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:riv_corner_radius="8dp" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/tv_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="8dp" />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tv_title"
@@ -33,10 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
-            android:minLines="1"
             android:fontFamily="@font/cairo_regular"
             android:gravity="start"
             android:maxLines="2"
+            android:minLines="1"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="The Forgotten
@@ -47,7 +61,7 @@ Hours"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_image" />
+            app:layout_constraintTop_toBottomOf="@+id/tvImageContainer" />
 
 
         <TextView
