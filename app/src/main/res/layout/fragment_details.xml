@@ -224,7 +224,7 @@ Hours"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_Similar"
-                    tools:listitem="@layout/item_pupuler" />
+                    tools:listitem="@layout/item_popular" />
 
 
                 <TextView
@@ -257,7 +257,7 @@ Hours"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_recomindation"
-                    tools:listitem="@layout/item_pupuler" />
+                    tools:listitem="@layout/item_popular" />
 
 
 

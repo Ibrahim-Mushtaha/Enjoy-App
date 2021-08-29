@@ -15,13 +15,11 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.on_attach
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
 import kotlinx.android.synthetic.main.item_all_list.view.*
 import kotlinx.android.synthetic.main.item_image_slider.view.*
-import kotlinx.android.synthetic.main.item_pupuler.view.*
-import kotlinx.android.synthetic.main.item_pupuler.view.tv_image
-import kotlinx.android.synthetic.main.item_pupuler.view.tv_title
+import kotlinx.android.synthetic.main.item_popular.view.*
 import kotlinx.android.synthetic.main.item_upcoming.view.*
 import kotlinx.android.synthetic.main.item_upcoming.view.tv_description
 import kotlinx.android.synthetic.main.item_upcoming.view.tv_release_day
-
+import kotlinx.android.synthetic.main.item_upcoming.view.tv_title
 
 
 class MovieAdapter(
@@ -37,7 +35,7 @@ class MovieAdapter(
             1 -> {
                 return ViewHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_pupuler, parent, false)
+                        .inflate(R.layout.item_popular, parent, false)
                 )
             }
             2 -> {

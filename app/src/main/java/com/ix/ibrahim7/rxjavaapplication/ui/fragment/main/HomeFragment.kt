@@ -37,23 +37,23 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
     private var selectedItemPos = 0
 
-    private val image_adapter by lazy {
+    private val imageAdapter by lazy {
         ImageSliderAdapter(ArrayList())
     }
 
     private val pupular_adapter by lazy {
         MovieAdapter(ArrayList(),1,this)
     }
-    private val pupularAdapter by lazy {
+    private val popularAdapter by lazy {
         MovieAdapter(ArrayList(),3,this)
     }
 
 
-    private val upcoming_adapter by lazy {
+    private val upcomingAdapter by lazy {
         MovieAdapter(ArrayList(),2,this)
     }
 
-    private val menu_adapter by lazy {
+    private val menuAdapter by lazy {
         MenuAdapter(ArrayList(),this)
     }
 
@@ -74,9 +74,8 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog()
         setUpViewpager()
-      //  requireActivity().setToolbarView(mBinding.toolbarView, "Home", true) {}
 
-        menu_adapter.data.apply {
+        menuAdapter.data.apply {
             clear()
             add(MenuItem(1,"POPULAR",true))
             add(MenuItem(1,"NOW",false))
@@ -84,7 +83,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         }
 
         mBinding.listMenu.apply {
-            adapter=menu_adapter
+            adapter = menuAdapter
         }
 
 
@@ -116,7 +115,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         }
 
         mBinding.upcomingList.apply {
-            adapter = upcoming_adapter
+            adapter = upcomingAdapter
         }
 
         viewModel.dataPupularLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -126,9 +125,9 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
                     pupular_adapter.data.clear()
                     pupular_adapter.data.addAll(it.data!!.contents!!)
                     pupular_adapter.notifyDataSetChanged()
-                    pupularAdapter.data.clear()
-                    pupularAdapter.data.addAll(it.data!!.contents!!)
-                    pupularAdapter.notifyDataSetChanged()
+                    popularAdapter.data.clear()
+                    popularAdapter.data.addAll(it.data.contents!!)
+                    popularAdapter.notifyDataSetChanged()
                     loadingDialog!!.dismiss()
                 }
                 is Resource.Error -> {
@@ -146,9 +145,9 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
             when (it) {
                 is Resource.Success -> {
                     Log.e("eee data",it.data.toString())
-                    upcoming_adapter.data.clear()
-                    upcoming_adapter.data.addAll(it.data!!.contents!!)
-                    upcoming_adapter.notifyDataSetChanged()
+                    upcomingAdapter.data.clear()
+                    upcomingAdapter.data.addAll(it.data!!.contents!!)
+                    upcomingAdapter.notifyDataSetChanged()
                  //   Constant.dialog.dismiss()
                 }
                 is Resource.Error -> {
@@ -168,7 +167,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
                 positionOffsetPixels: Int
             ) {
                 Glide.with(requireActivity())
-                    .load(Constant.IMAGE_URL + pupularAdapter.data[position].backdropPath)
+                    .load(Constant.IMAGE_URL + popularAdapter.data[position].backdropPath)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(bitmapTransform(BlurTransformation(16, 3)))
                     .into(mBinding.tvImageSliderBackground)
@@ -179,14 +178,14 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
 
     private fun setUpViewpager() {
-        image_adapter.data.clear()
-        image_adapter.data.add(R.drawable.ic_slider1)
-        image_adapter.data.add(R.drawable.ic_slider2)
+        imageAdapter.data.clear()
+        imageAdapter.data.add(R.drawable.ic_slider1)
+        imageAdapter.data.add(R.drawable.ic_slider2)
         view_pager.apply {
-            if (image_adapter.data.size == 0) {
+            if (imageAdapter.data.size == 0) {
                 view_pager.visibility = View.GONE
             }
-            adapter = pupularAdapter
+            adapter = popularAdapter
             setPageTransformer(ZoomAnimation())
         }
     }
@@ -203,10 +202,10 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
     }
 
     override fun onClickListener(menuitem: MenuItem, position: Int) {
-        menu_adapter.data[selectedItemPos].isSelected=false
+        menuAdapter.data[selectedItemPos].isSelected=false
         menuitem.isSelected=true
         selectedItemPos =position
-        menu_adapter.notifyDataSetChanged()
+        menuAdapter.notifyDataSetChanged()
 
         when(menuitem.code){
 
