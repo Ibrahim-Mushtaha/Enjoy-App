@@ -13,20 +13,11 @@
         android:background="@color/purple"
         tools:context=".ui.activity.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <fragment
-            android:id="@+id/fragment_nav_host_auth"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_nav_host_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:navGraph="@navigation/nav_home"
+            app:navGraph="@navigation/main_nav"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:defaultNavHost="true" />
 

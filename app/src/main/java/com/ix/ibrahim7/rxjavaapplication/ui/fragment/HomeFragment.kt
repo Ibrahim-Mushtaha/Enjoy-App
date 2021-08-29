@@ -20,6 +20,7 @@ import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
 import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.Movie.Content
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
+import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
@@ -59,6 +60,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
     val array = ArrayList<Content>()
+    private var loadingDialog : LoadingDialog ?= null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -74,7 +76,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        loadingDialog = LoadingDialog()
         setUpViewpager()
       //  requireActivity().setToolbarView(mBinding.toolbarView, "Home", true) {}
 
@@ -131,14 +133,14 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
                     pupularAdapter.data.clear()
                     pupularAdapter.data.addAll(it.data!!.contents!!)
                     pupularAdapter.notifyDataSetChanged()
-                    Constant.dialog.dismiss()
+                    loadingDialog!!.dismiss()
                 }
                 is Resource.Error -> {
                     Log.e("eeee Error",it.message.toString())
-                    Constant.dialog.dismiss()
+                    loadingDialog!!.dismiss()
                 }
                 is Resource.Loading -> {
-                    Constant.showDialog(requireActivity())
+                    loadingDialog!!.show(childFragmentManager,"")
                 }
             }
         })
