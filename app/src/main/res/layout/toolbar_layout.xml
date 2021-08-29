@@ -26,7 +26,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/purple">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -34,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
                     android:visibility="invisible"
+                    android:backgroundTint="@color/purple"
                     android:src="@drawable/ic_toolbar_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -47,6 +49,7 @@
                     android:layout_marginStart="@dimen/margin_16"
                     android:background="@drawable/shape_circle"
                     android:elevation="6dp"
+                    android:tint="@color/red"
                     android:src="@drawable/ic_arrow_back"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
                     app:layout_constraintStart_toStartOf="parent"
