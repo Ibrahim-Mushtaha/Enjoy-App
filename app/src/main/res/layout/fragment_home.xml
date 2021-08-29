@@ -40,17 +40,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
+                <View
+                    android:id="@+id/fadeView"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:alpha="0.1"
+                    android:layout_height="120dp"
                     android:background="@drawable/ic_liner_background"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvImageSliderBackground"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@id/tvImageSliderBackground" />
+                    app:layout_constraintBottom_toBottomOf="@id/tvImageSliderBackground" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
@@ -80,10 +75,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginVertical="@dimen/margin_8"
-                        android:layout_marginHorizontal="@dimen/margin_16"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:itemCount="3"

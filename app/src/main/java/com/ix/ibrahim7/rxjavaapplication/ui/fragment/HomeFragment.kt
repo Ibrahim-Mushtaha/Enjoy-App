@@ -191,12 +191,8 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
             Glide.with(requireActivity())
                 .load(R.drawable.ic_slider1)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(bitmapTransform(BlurTransformation(12, 1)))
+                .apply(bitmapTransform(BlurTransformation(8, 1)))
                 .into(mBinding.tvImageSliderBackground)
-            Glide.with(requireActivity())
-                .load(R.drawable.shape_main_background)
-                .apply(bitmapTransform(BlurTransformation(12, 8)))
-                .into(mBinding.imageView2)
             adapter = pupularAdapter
             setPageTransformer(ZoomAnimation())
         }
