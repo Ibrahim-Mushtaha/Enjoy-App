@@ -1,4 +1,4 @@
-package com.ix.ibrahim7.rxjavaapplication.ui.fragment
+package com.ix.ibrahim7.rxjavaapplication.ui.fragment.main
 
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +19,6 @@ import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
 import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.Movie.Content
-import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -190,11 +189,6 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
             if (image_adapter.data.size == 0) {
                 view_pager.visibility = View.GONE
             }
-            Glide.with(requireActivity())
-                .load(R.drawable.ic_slider1)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(bitmapTransform(BlurTransformation(8, 1)))
-                .into(mBinding.tvImageSliderBackground)
             adapter = pupularAdapter
             setPageTransformer(ZoomAnimation())
         }

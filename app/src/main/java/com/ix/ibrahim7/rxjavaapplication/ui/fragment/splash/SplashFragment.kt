@@ -1,4 +1,4 @@
-package com.ix.ibrahim7.rxjavaapplication.ui.fragment
+package com.ix.ibrahim7.rxjavaapplication.ui.fragment.splash
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -37,7 +37,6 @@ class SplashFragment : Fragment() {
                 is SplashState.MainActivity -> {
                         GlobalScope.launch {
                             withContext(Dispatchers.Main){
-                                delay(300)
                                 delay(1400)
                                 findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
                             }

@@ -7,6 +7,7 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.ix.ibrahim7.rxjavaapplication.R
@@ -40,17 +41,17 @@ class MainActivity : AppCompatActivity() {
 
         mbinding.bottomNavigation.setOnNavigationItemReselectedListener { /*No-OP*/ }
 
-        /*mbinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
+        mbinding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.profileFragment -> {
-                    navController.navigate(R.id.profileFragment, null, getNavOptions())
+                R.id.moreFragment -> {
+                    navController.navigate(R.id.moreFragment, null, getNavOptions())
                 }
                 else -> {
                     navController.navigate(item.itemId, null, null)
                 }
             }
             true
-        }*/
+        }
 
         navHostFragment!!.findNavController()
             .addOnDestinationChangedListener { _: NavController?, destination: NavDestination, arguments: Bundle? ->
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         mbinding.bottomNavigation.visibility = View.GONE
                     }
-                    R.id.homeFragment -> {
+                    R.id.homeFragment, R.id.movieFragment2,R.id.tvShowFragment-> {
                         window.apply {
                             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }
@@ -78,5 +79,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun getNavOptions(): NavOptions {
+        return NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_up)
+            .setExitAnim(R.anim.slide_down)
+            .setPopEnterAnim(R.anim.slide_up)
+            .setPopExitAnim(R.anim.slide_down)
+            .build()
+    }
 
 }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.HomeFragment"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.SplashFragment"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.splash.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
@@ -61,4 +61,16 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_home" />
     </fragment>
+    <fragment
+        android:id="@+id/movieFragment2"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.MovieFragment"
+        android:label="MovieFragment" />
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.MoreFragment"
+        android:label="MoreFragment" />
+    <fragment
+        android:id="@+id/tvShowFragment"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.TvShowFragment"
+        android:label="TvShowFragment" />
 </navigation>

@@ -5,16 +5,16 @@
         android:title="Explore"
         android:icon="@drawable/ic_home"/>
 
-    <item android:id="@+id/movieFragment"
+    <item android:id="@+id/movieFragment2"
         android:title="Movies"
         android:icon="@drawable/ic_movie"/>
 
-    <item android:id="@+id/offerFragment"
+    <item android:id="@+id/tvShowFragment"
         android:title="Tv Shows"
         android:icon="@drawable/ic_tv"/>
 
 
-    <item android:id="@+id/myOrderFragment"
+    <item android:id="@+id/moreFragment"
         android:title="More"
         android:icon="@drawable/ic_menu"/>
 
