@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.ix.ibrahim7.rxjavaapplication.model.Movie.Movie
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.repository.ApiRepository
 import com.ix.ibrahim7.rxjavaapplication.util.Resource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

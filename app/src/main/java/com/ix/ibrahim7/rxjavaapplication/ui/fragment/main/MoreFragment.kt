@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentMoreBinding
+import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 
 class MoreFragment : Fragment(){
 
@@ -22,6 +24,10 @@ class MoreFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().setToolbarView(mBinding.toolbarLayout,"More",false){
+            findNavController().navigateUp()
+        }
 
     }
 

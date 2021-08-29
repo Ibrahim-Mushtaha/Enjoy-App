@@ -23,8 +23,6 @@ fun Activity.setToolbarView(
     view: ToolbarLayoutBinding,
     title: String,
     main: Boolean,
-    hasMenu:Boolean = false,
-    menuIcon:Int = 0,
     onComplete: (type:Int) -> Unit
 ): ToolbarLayoutBinding {
 

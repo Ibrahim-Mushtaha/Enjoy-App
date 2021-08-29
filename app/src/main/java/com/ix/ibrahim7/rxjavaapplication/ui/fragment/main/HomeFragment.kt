@@ -18,7 +18,7 @@ import com.ix.ibrahim7.rxjavaapplication.adapter.MenuAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
 import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
-import com.ix.ibrahim7.rxjavaapplication.model.Movie.Content
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -31,7 +31,10 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 
 class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
-    lateinit var mBinding:FragmentHomeBinding
+    private val mBinding by lazy {
+        FragmentHomeBinding.inflate(layoutInflater)
+    }
+
     private var selectedItemPos = 0
 
     private val image_adapter by lazy {
@@ -65,13 +68,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        mBinding = FragmentHomeBinding.inflate(inflater, container, false).apply {
-            executePendingBindings()
-        }
-        return mBinding.root
-    }
-
+    ) = mBinding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentAllListBinding
-import com.ix.ibrahim7.rxjavaapplication.model.Movie.Content
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID

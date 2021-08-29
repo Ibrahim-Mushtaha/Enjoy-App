@@ -15,7 +15,7 @@ import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.RecommendationsAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.ReviewsAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentDetailsBinding
-import com.ix.ibrahim7.rxjavaapplication.model.Movie.Content
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.DetailsViewModel
 import kotlinx.android.synthetic.main.fragment_details.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL

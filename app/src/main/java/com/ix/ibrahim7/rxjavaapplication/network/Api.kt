@@ -1,7 +1,7 @@
 package com.ix.ibrahim7.rxjavaapplication.network
 
 import com.ix.ibrahim7.rxjavaapplication.model.details.MovieDetails
-import com.ix.ibrahim7.rxjavaapplication.model.Movie.Movie
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.model.review.Reviews
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

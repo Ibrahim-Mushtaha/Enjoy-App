@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -32,11 +33,11 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:visibility="invisible"
+                    android:layout_height="@dimen/size_80dp"
                     android:backgroundTint="@color/purple"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_toolbar_background"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +50,8 @@
                     android:layout_marginStart="@dimen/margin_16"
                     android:background="@drawable/shape_circle"
                     android:elevation="6dp"
-                    android:tint="@color/red"
                     android:src="@drawable/ic_arrow_back"
+                    android:tint="@color/red"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvTitle" />
@@ -61,7 +62,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_16"
-                    android:layout_marginTop="38dp"
                     android:fontFamily="@font/tajawal_bold"
                     android:gravity="start"
                     android:text="Home"
@@ -69,6 +69,7 @@
                     android:textColor="@color/white"
                     android:textDirection="locale"
                     android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnBack"
                     app:layout_constraintTop_toTopOf="parent" />
 

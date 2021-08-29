@@ -4,18 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="Movie"
+            type="com.ix.ibrahim7.rxjavaapplication.model.movie.Content" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_4"
         android:layout_marginHorizontal="@dimen/margin_4"
+        android:layout_marginVertical="@dimen/margin_4"
         android:background="@color/purple"
-        android:paddingBottom="4dp"
         android:paddingHorizontal="2dp"
-        >
+        android:paddingBottom="4dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/tvImageContainer"
@@ -31,8 +32,9 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/tv_image"
+                loadImage="@{Movie.posterPath}"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="224dp"
                 android:scaleType="center"
                 android:src="@drawable/ic_movie_placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,20 +51,19 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:fontFamily="@font/cairo_regular"
-            android:gravity="start"
+            android:textAlignment="viewStart"
             android:maxLines="2"
             android:minLines="1"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="The Forgotten
-Hours"
+            android:text="@{Movie.title}"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/tvImageContainer"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/tvImageContainer"
-            app:layout_constraintTop_toBottomOf="@+id/tvImageContainer" />
+            android:lineSpacingMultiplier="0.8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvImageContainer"
+            tools:text="The Forgotten Hours The Forgotten Hours" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

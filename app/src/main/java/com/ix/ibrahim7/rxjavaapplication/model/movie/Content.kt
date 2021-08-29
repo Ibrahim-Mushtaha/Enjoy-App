@@ -1,4 +1,4 @@
-package com.ix.ibrahim7.rxjavaapplication.model.Movie
+package com.ix.ibrahim7.rxjavaapplication.model.movie
 
 
 import com.google.gson.annotations.SerializedName

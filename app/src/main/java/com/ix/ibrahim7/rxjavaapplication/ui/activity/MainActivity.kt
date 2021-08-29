@@ -62,9 +62,15 @@ class MainActivity : AppCompatActivity() {
                         }
                         mbinding.bottomNavigation.visibility = View.GONE
                     }
-                    R.id.homeFragment, R.id.movieFragment2,R.id.tvShowFragment-> {
+                    R.id.homeFragment-> {
                         window.apply {
                             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+                        }
+                        mbinding.bottomNavigation.visibility = View.VISIBLE
+                    }
+                    R.id.movieFragment2,R.id.tvShowFragment-> {
+                        window.apply {
+                            clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }
                         mbinding.bottomNavigation.visibility = View.VISIBLE
                     }

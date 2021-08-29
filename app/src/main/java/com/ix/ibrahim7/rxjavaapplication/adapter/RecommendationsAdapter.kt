@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ix.ibrahim7.rxjavaapplication.R
-import com.ix.ibrahim7.rxjavaapplication.model.Movie.Content
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import kotlinx.android.synthetic.main.item_pupuler.view.*
 import kotlinx.android.synthetic.main.item_pupuler.view.tv_image
 import kotlinx.android.synthetic.main.item_pupuler.view.tv_title

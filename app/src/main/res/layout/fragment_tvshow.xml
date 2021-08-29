@@ -29,7 +29,7 @@
                 android:background="@color/purple">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcMovie"
+                    android:id="@+id/rcTvShow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="@dimen/margin_8"
@@ -45,9 +45,9 @@
                     android:layout_width="0dp"
                     android:layout_height="86dp"
                     android:layout_marginTop="@dimen/padding_16"
-                    app:layout_constraintEnd_toEndOf="@+id/rcMovie"
-                    app:layout_constraintStart_toStartOf="@+id/rcMovie"
-                    app:layout_constraintTop_toBottomOf="@+id/rcMovie" />
+                    app:layout_constraintEnd_toEndOf="@+id/rcTvShow"
+                    app:layout_constraintStart_toStartOf="@+id/rcTvShow"
+                    app:layout_constraintTop_toBottomOf="@+id/rcTvShow" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
