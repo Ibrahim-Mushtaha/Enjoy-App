@@ -44,6 +44,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
     private val pupular_adapter by lazy {
         MovieAdapter(ArrayList(),1,this)
     }
+
     private val popularAdapter by lazy {
         MovieAdapter(ArrayList(),3,this)
     }
@@ -72,7 +73,7 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingDialog = LoadingDialog()
+        loadingDialog =  LoadingDialog.getInstance()
         setUpViewpager()
 
         menuAdapter.data.apply {
@@ -128,11 +129,15 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
                     popularAdapter.data.clear()
                     popularAdapter.data.addAll(it.data.contents!!)
                     popularAdapter.notifyDataSetChanged()
-                    loadingDialog!!.dismiss()
+                    try {
+                        loadingDialog!!.dismiss()
+                    }catch (e:Exception) {}
                 }
                 is Resource.Error -> {
                     Log.e("eeee Error",it.message.toString())
-                    loadingDialog!!.dismiss()
+                    try {
+                        loadingDialog!!.dismiss()
+                    }catch (e:Exception) {}
                 }
                 is Resource.Loading -> {
                     loadingDialog!!.show(childFragmentManager,"")

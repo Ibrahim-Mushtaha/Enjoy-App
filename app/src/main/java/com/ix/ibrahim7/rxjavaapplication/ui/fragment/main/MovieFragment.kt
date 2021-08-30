@@ -42,7 +42,7 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingDialog = LoadingDialog()
+        loadingDialog =  LoadingDialog.getInstance()
         requireActivity().setToolbarView(mBinding.toolbarLayout,"Movie",true){}
 
         with(mBinding){
@@ -56,11 +56,15 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
                     is Resource.Success -> {
                         Log.e("eee data",it.data.toString())
                        movieAdapter.submitList(it.data!!.contents!!)
-                        loadingDialog!!.dismiss()
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
                     }
                     is Resource.Error -> {
                         Log.e("eeee Error",it.message.toString())
-                        loadingDialog!!.dismiss()
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
                     }
                     is Resource.Loading -> {
                         loadingDialog!!.show(childFragmentManager,"")

@@ -13,6 +13,8 @@ import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentAllListBinding
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
+import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
+import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
@@ -24,11 +26,12 @@ import com.ix.ibrahim7.rxjavaapplication.util.Resource
 
 class AllListFragment : Fragment(),MovieAdapter.onClick {
 
-    lateinit var mBinding: FragmentAllListBinding
+    private val mBinding by lazy {
+        FragmentAllListBinding.inflate(layoutInflater)
+    }
 
-
-    private val list_adapter by lazy {
-        MovieAdapter(ArrayList(),3,this)
+    private val listAdapter by lazy {
+        MovieAdapter(ArrayList(),4,this)
     }
 
     private val viewModel by lazy {
@@ -39,32 +42,28 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
         requireArguments().getInt(TYPE)
     }
 
-
     private var isLoading = false
     private var isLastPage = false
     private var isScrolling = false
+    private var loadingDialog : LoadingDialog ?= null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mBinding = FragmentAllListBinding.inflate(inflater, container, false).apply {
-            executePendingBindings()
-        }
-        return mBinding.root
-    }
+    ) = mBinding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadingDialog =  LoadingDialog.getInstance()
 
-        mBinding.btnBack.setOnClickListener {
-        findNavController().navigateUp()
+        requireActivity().setToolbarView(mBinding.toolbarLayout,"All Movie",false){
+            findNavController().navigateUp()
         }
 
         mBinding.listItem.apply {
-            adapter=list_adapter
+            adapter=listAdapter
             layoutAnimation = AnimationUtils.loadLayoutAnimation(requireContext(),R.anim.recyclerview_layout_animation)
             addOnScrollListener(onScrollListener)
         }
@@ -77,17 +76,21 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
                       when (it) {
                           is Resource.Success -> {
                               Log.e("eee data", it.data.toString())
-                              list_adapter.data.clear()
-                              list_adapter.data.addAll(it.data!!.contents!!)
-                              list_adapter.notifyDataSetChanged()
-                              Constant.dialog.dismiss()
+                              listAdapter.data.clear()
+                              listAdapter.data.addAll(it.data!!.contents!!)
+                              listAdapter.notifyDataSetChanged()
+                              try {
+                                  loadingDialog!!.dismiss()
+                              }catch (e:Exception) {}
                           }
                           is Resource.Error -> {
                               Log.e("eeee Error", it.message.toString())
-                              Constant.dialog.dismiss()
+                              try {
+                                  loadingDialog!!.dismiss()
+                              }catch (e:Exception) {}
                           }
                           is Resource.Loading -> {
-                              Constant.showDialog(requireActivity())
+                              loadingDialog!!.show(childFragmentManager,"")
                           }
                       }
                   })
@@ -100,9 +103,9 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
                           is Resource.Success -> {
                               isLoading = false
                               onScrollListener.totalCount = it.data!!.totalResults!!
-                              list_adapter.data.clear()
-                              list_adapter.data.addAll(it.data.contents!!)
-                              list_adapter.notifyDataSetChanged()
+                              listAdapter.data.clear()
+                              listAdapter.data.addAll(it.data.contents!!)
+                              listAdapter.notifyDataSetChanged()
                               Log.e("eee dataUpcoming", it.data.toString())
                               Constant.dialog.dismiss()
                           }

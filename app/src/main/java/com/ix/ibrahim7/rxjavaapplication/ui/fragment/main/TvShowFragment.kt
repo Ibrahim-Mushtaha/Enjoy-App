@@ -42,7 +42,7 @@ class TvShowFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Co
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingDialog = LoadingDialog()
+        loadingDialog =  LoadingDialog.getInstance()
         requireActivity().setToolbarView(mBinding.toolbarLayout,"Tv Show",true){}
 
         with(mBinding){
@@ -56,7 +56,9 @@ class TvShowFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Co
                     is Resource.Success -> {
                         Log.e("eee data",it.data.toString())
                         tvShowAdapter.submitList(it.data!!.contents!!)
-                        loadingDialog!!.dismiss()
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
                     }
                     is Resource.Error -> {
                         Log.e("eeee Error",it.message.toString())
