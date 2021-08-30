@@ -51,10 +51,14 @@ class ReviewsAdapter(
                 tv_image_user,
                 Color.TRANSPARENT
             )
-            tv_review_name.text = currentItem.authorDetails.name
             tv_review_note.text = currentItem.content
-            val authorRate = (currentItem.authorDetails.rating!! / 2).toFloat()
-            tvrating.rating = authorRate
+            val authorRate = currentItem.authorDetails.rating?.let {  (currentItem.authorDetails.rating / 2).toFloat() }
+            tvrating.rating = authorRate ?: 0f
+
+            if (currentItem.authorDetails.name.isNullOrEmpty())
+                tv_review_name.visibility = View.GONE
+            else
+            tv_review_name.text = currentItem.authorDetails.name
 
 
             setOnClickListener {

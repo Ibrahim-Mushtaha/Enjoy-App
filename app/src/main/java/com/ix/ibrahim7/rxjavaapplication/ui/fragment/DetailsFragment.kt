@@ -121,6 +121,8 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                             movieRating.rating = (movie.voteAverage!! / 2).toFloat()
                             tvRating.text = (movie.voteAverage!! / 2).toFloat().toString()
                             tvMovieDescription.text = movie.overview
+                            tvReleaseDay.text = movie.releaseDate
+                            tvViewerCount.text = movie.voteCount.toString()
                             Glide.with(requireActivity())
                                 .load(Constant.IMAGE_URL + movie.backdropPath)
                                 .transition(DrawableTransitionOptions.withCrossFade())
