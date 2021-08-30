@@ -83,7 +83,6 @@ dependencies {
     implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
 
     //dexter
-    implementation 'com.github.jrvansuita:PickImage:2.2.4'
     implementation 'com.karumi:dexter:6.2.1'
 
     // ViewPager2

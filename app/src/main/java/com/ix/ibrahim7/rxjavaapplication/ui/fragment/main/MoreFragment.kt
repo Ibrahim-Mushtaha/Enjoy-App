@@ -7,7 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentMoreBinding
+import com.ix.ibrahim7.rxjavaapplication.other.INSTAGRAM_USERNAME
+import com.ix.ibrahim7.rxjavaapplication.other.launchInstagram
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
+import com.ix.ibrahim7.rxjavaapplication.other.shareApplication
+import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LanguageDialog
+import com.ix.ibrahim7.rxjavaapplication.ui.dialog.NotificationStatusDialog
 
 class MoreFragment : Fragment(){
 
@@ -27,6 +32,26 @@ class MoreFragment : Fragment(){
 
         requireActivity().setToolbarView(mBinding.toolbarLayout,"More",false){
             findNavController().navigateUp()
+        }
+
+        with(mBinding){
+
+            btnNotification.setOnClickListener {
+                NotificationStatusDialog().show(childFragmentManager,"")
+            }
+
+            btnLanguage.setOnClickListener {
+                LanguageDialog().show(childFragmentManager,"")
+            }
+
+            btnShare.setOnClickListener {
+                requireActivity().shareApplication()
+            }
+
+            btnLaunchInstagram.setOnClickListener {
+                requireActivity().launchInstagram(INSTAGRAM_USERNAME)
+            }
+
         }
 
     }

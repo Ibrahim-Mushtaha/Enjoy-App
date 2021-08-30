@@ -1,22 +1,25 @@
 package com.ix.ibrahim7.rxjavaapplication.other
 
 import android.app.*
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.res.Resources
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
+import com.ix.ibrahim7.rxjavaapplication.BuildConfig
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.ToolbarLayoutBinding
 import com.ix.ibrahim7.rxjavaapplication.ui.activity.MainActivity
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.io.*
 import java.util.*
 
 fun Activity.setToolbarView(
@@ -86,53 +89,71 @@ fun getDefaultLang(onComplete: (String) -> Unit){
     }
 }
 
-fun Activity.getPermission(
-    permissions: ArrayList<String>,
-    onSuccess: () -> Unit,
-    onDenied: () -> Unit
-) {
-    Dexter.withContext(this)
-        .withPermissions(
-            permissions
+fun Activity.launchInstagram(username: String) {
+    val uri = Uri.parse("http://instagram.com/_u/$username")
+    val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+    likeIng.setPackage("com.instagram.android")
+    try {
+        startActivity(likeIng)
+    } catch (e: ActivityNotFoundException) {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://instagram.com/xxx")
+            )
         )
-        .withListener(object : MultiplePermissionsListener {
-            override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                report?.let {
-                    when {
-                        report.areAllPermissionsGranted() -> {
-                            onSuccess()
-                        }
-                        else -> {
-                            onDenied()
-                        }
-                    }
-                }
-            }
-
-            override fun onPermissionRationaleShouldBeShown(
-                p0: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
-                p1: PermissionToken?
-            ) {
-                p1?.continuePermissionRequest()
-            }
-
-        })
-        .withErrorListener {}
-        .check()
+    }
 }
 
-fun Activity.restartActivity(){
-    finish()
-    startActivity(
-        Intent(
-            this,
-            MainActivity::class.java
+fun Activity.shareApplication() {
+    val app: ApplicationInfo = this.application.applicationInfo
+    val filePath = app.sourceDir
+    val intent = Intent(Intent.ACTION_SEND)
+
+    intent.type = "*/*"
+
+    val originalApk = File(filePath)
+    try {
+        //Make new directory in new location=
+        var tempFile =
+            File(this.externalCacheDir.toString() + "/ExtractedApk")
+        //If directory doesn't exists create new
+        if (!tempFile.isDirectory) if (!tempFile.mkdirs()) return
+        //Get application's name and convert to lowercase
+        tempFile = File(
+            tempFile.path + "/" + getString(app.labelRes).replace(" ", "")
+                .toLowerCase() + ".apk"
         )
-    )
-    overridePendingTransition(
-        android.R.anim.fade_in,
-        android.R.anim.fade_out
-    )
+        //If file doesn't exists create new
+        if (!tempFile.exists()) {
+            if (!tempFile.createNewFile()) {
+                return
+            }
+        }
+        //Copy file to new location
+        val `in`: InputStream = FileInputStream(originalApk)
+        val out: OutputStream = FileOutputStream(tempFile)
+        val buf = ByteArray(1024)
+        var len: Int
+        while (`in`.read(buf).also { len = it } > 0) {
+            out.write(buf, 0, len)
+        }
+        `in`.close()
+        out.close()
+        println("File copied.")
+//          intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFile));
+        val photoURI = FileProvider.getUriForFile(
+            this,
+            BuildConfig.APPLICATION_ID.toString() + ".provider",
+            tempFile
+        )
+        //  intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(tempFile));
+        intent.putExtra(Intent.EXTRA_STREAM, photoURI)
+        startActivity(Intent.createChooser(intent, "Share app via"))
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
 }
 
 

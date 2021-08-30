@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/shape_background_dialog"
+        android:elevation="2dp"
+        android:paddingBottom="16dp">
+
+
+        <TextView
+            android:id="@+id/txtDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:fontFamily="@font/cairo_semibold"
+            android:text="@string/select_your_favorite_language"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="25dp"
+            android:layout_height="10dp"
+            android:background="@drawable/shape_line"
+            android:backgroundTint="@color/red"
+            app:layout_constraintStart_toStartOf="@+id/txtDialogTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtDialogTitle" />
+
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:layout_editor_absoluteX="24dp">
+
+
+            <RadioButton
+                android:id="@+id/btn_english"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo_regular"
+                android:padding="8dp"
+                android:textColor="@color/gray_lite"
+                android:buttonTint="@color/shape_radio_button"
+                android:checked="true"
+                android:text="@string/english"
+                android:textSize="18dp" />
+
+            <RadioButton
+                android:id="@+id/btn_arabic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cairo_regular"
+                android:padding="8dp"
+                android:buttonTint="@color/shape_radio_button"
+                android:textColor="@color/gray_lite"
+                android:text="@string/arabic"
+                android:textSize="18dp" />
+        </RadioGroup>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/font_16"
+            android:layout_marginVertical="@dimen/margin_8"
+            android:layout_weight="1"
+            android:backgroundTint="@color/red"
+            android:fontFamily="@font/cairo_regular"
+            android:padding="12dp"
+            android:text="Apply"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold"
+            app:cornerRadius="@dimen/radius_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
