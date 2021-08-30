@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.GenresAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
@@ -17,11 +20,13 @@ import com.ix.ibrahim7.rxjavaapplication.adapter.ReviewsAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentDetailsBinding
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.DetailsViewModel
+import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import kotlinx.android.synthetic.main.fragment_details.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
 import com.ix.ibrahim7.rxjavaapplication.util.Resource
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.onClick,ReviewsAdapter.onClick {
 
@@ -114,7 +119,14 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                             genres_adapter.notifyDataSetChanged()
                             tvMovieName.text = movie.title
                             movieRating.rating = (movie.voteAverage!! / 2).toFloat()
+                            tvRating.text = (movie.voteAverage!! / 2).toFloat().toString()
                             tvMovieDescription.text = movie.overview
+                            Glide.with(requireActivity())
+                                .load(Constant.IMAGE_URL + movie.backdropPath)
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .apply(RequestOptions.bitmapTransform(BlurTransformation(16, 3)))
+                                .into(mBinding.tvMovieBackgroundImage)
+
                             tvMovieDescription.startAnimation(
                                 AnimationUtils.loadAnimation(requireContext(),
                                     R.anim.slide_in_left

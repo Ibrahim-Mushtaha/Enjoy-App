@@ -34,7 +34,6 @@
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_80dp"
-                    android:backgroundTint="@color/purple"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_toolbar_background"
                     android:visibility="invisible"

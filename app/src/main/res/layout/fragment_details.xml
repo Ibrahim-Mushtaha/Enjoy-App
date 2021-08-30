@@ -7,302 +7,346 @@
 
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/purple"
-        tools:context=".ui.fragment.DetailsFragment">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_basic"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/purple"
-            app:title=" ">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"
-                    android:gravity="center">
+                    android:background="@color/purple">
+
 
                     <ImageView
-                        android:id="@+id/btn_back"
-                        android:layout_width="20sp"
-                        android:layout_height="20sp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_back_arrow" />
-
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    tools:layout_editor_absoluteX="72dp"
-                    tools:layout_editor_absoluteY="1dp">
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:background="@color/purple"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_below="@id/toolbar_basic">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/purple">
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp"
-                    android:background="@color/purple"
-                    android:backgroundTint="@color/purple"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/tv_image"
-                        android:layout_width="170dp"
-                        android:layout_height="240dp"
-                        android:scaleType="center"
-                        android:src="@drawable/ic_launcher_background"
+                        android:id="@+id/tvMovieBackgroundImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:riv_corner_radius="8dp" />
-                </androidx.cardview.widget.CardView>
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <View
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_80dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitXY"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageButton
+                            android:id="@+id/btnBack"
+                            android:layout_width="@dimen/size_36dp"
+                            android:layout_height="@dimen/size_36dp"
+                            android:layout_marginStart="@dimen/margin_16"
+                            android:background="@drawable/shape_circle"
+                            android:elevation="6dp"
+                            android:src="@drawable/ic_arrow_back"
+                            android:tint="@color/red"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/fadeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:background="@drawable/ic_liner_background"
+                        app:layout_constraintBottom_toBottomOf="@id/tvMovieBackgroundImage" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/font_18"
+                        android:background="@color/purple"
+                        android:backgroundTint="@color/purple"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/tv_image"
+                            android:layout_width="170dp"
+                            android:layout_height="240dp"
+                            android:scaleType="center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:riv_corner_radius="8dp" />
+                    </androidx.cardview.widget.CardView>
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@drawable/ic_liner_background"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/guideline3">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@drawable/ic_liner_background"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/guideline3">
 
 
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_movie_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_12"
+                        android:layout_marginTop="@dimen/margin_24"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:maxLines="2"
+                        android:lineSpacingMultiplier="0.6"
+                        tools:text="The Forgotten Hours The Forgotten Hours"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_18"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.548"
+                        app:layout_constraintStart_toEndOf="@+id/cardView"
+                        app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+                    <RatingBar
+                        android:id="@+id/movie_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:stepSize=".5"
+                        android:theme="@style/RatingBarTheme"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+                        app:layout_constraintStart_toStartOf="@+id/tv_movie_name"
+                        app:layout_constraintTop_toTopOf="@+id/tvRating"
+                        tools:rating="5" />
+
+                    <TextView
+                        android:id="@+id/tvRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_4"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/cairo_regular"
+                        android:gravity="bottom"
+                        android:maxLines="1"
+                        tools:text="5 Star"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_12"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/movie_rating"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_movie_name" />
+
+                    <TextView
+                        android:id="@+id/tvOverView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_16"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:layout_marginVertical="@dimen/margin_12"
+                        android:maxLines="2"
+                        android:text="Overview"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_18"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+                    <TextView
+                        android:id="@+id/tv_movie_description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/margin_8"
+                        android:layout_marginHorizontal="@dimen/margin_16"
+                        android:fontFamily="@font/cairo_regular"
+                        android:gravity="start"
+                        android:maxLines="5"
+                        tools:text="The Forgotten Hours"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvOverView" />
+
+
+                    <View
+                        android:id="@+id/line5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.4dp"
+                        android:layout_marginStart="14sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="14sp"
+                        android:background="#29999999"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_movie_description" />
+
+                    <TextView
+                        android:id="@+id/tv_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/margin_12"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="8dp"
+                        android:text="Literary genres"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line5" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/genres_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_category"
+                        tools:listitem="@layout/item_category" />
+
+
+                    <TextView
+                        android:id="@+id/tv_Similar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/margin_12"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="8dp"
+                        android:text="Similar Movie"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/genres_list" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/similar_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12sp"
+                        android:minHeight="300dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_Similar"
+                        tools:listitem="@layout/item_popular" />
+
+
+                    <TextView
+                        android:id="@+id/tv_recomindation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/margin_12"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="8dp"
+                        android:text="Recommendations Movie"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/similar_list" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recommendations_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12sp"
+                        android:minHeight="300dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recomindation"
+                        tools:listitem="@layout/item_popular" />
+
+
+                    <TextView
+                        android:id="@+id/tv_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_16"
+                        android:layout_marginTop="@dimen/margin_8"
+                        android:fontFamily="@font/cairo_semibold"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="8dp"
+                        android:text="Top Review"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recommendations_list" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/reviewslist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12sp"
+                        android:minHeight="120dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_review"
+                        tools:itemCount="8"
+                        tools:listitem="@layout/item_review" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="126dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
 
-
-                <TextView
-                    android:id="@+id/tv_movie_name"
-                    android:layout_width="224dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14sp"
-                    android:fontFamily="@font/cairo_semibold"
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="The Forgotten
-Hours"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-                <RatingBar
-                    android:id="@+id/movie_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX="0.6"
-                    android:scaleY="0.6"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_name" />
-
-                <TextView
-                    android:id="@+id/tv_movie_description"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12sp"
-                    android:fontFamily="@font/cairo_regular"
-                    android:gravity="start"
-                    android:maxLines="5"
-                    android:paddingStart="12sp"
-                    android:paddingEnd="12sp"
-                    android:text="The Forgotten
-Hours"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/movie_rating" />
-
-
-                <View
-                    android:id="@+id/line5"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.8dp"
-                    android:layout_marginStart="14sp"
-                    android:layout_marginEnd="14sp"
-                    android:layout_marginTop="8dp"
-                    android:background="#4D999999"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_description"/>
-
-                <TextView
-                    android:id="@+id/tv_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cairo_semibold"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:layout_marginStart="14sp"
-                    android:layout_marginTop="14sp"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="8dp"
-                    android:text="Literary genres"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line5" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/genres_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_category"
-                    tools:listitem="@layout/item_category" />
-
-
-                <TextView
-                    android:id="@+id/tv_Similar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14sp"
-                    android:layout_marginTop="12sp"
-                    android:fontFamily="@font/cairo_semibold"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="8dp"
-                    android:text="Similar Movie"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/genres_list" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/similar_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12sp"
-                    android:minHeight="300dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_Similar"
-                    tools:listitem="@layout/item_popular" />
-
-
-                <TextView
-                    android:id="@+id/tv_recomindation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14sp"
-                    android:layout_marginTop="12sp"
-                    android:fontFamily="@font/cairo_semibold"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="8dp"
-                    android:text="Recommendations Movie"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/similar_list" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recommendations_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12sp"
-                    android:minHeight="300dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_recomindation"
-                    tools:listitem="@layout/item_popular" />
-
-
-
-                <TextView
-                    android:id="@+id/tv_review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14sp"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/cairo_semibold"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="8dp"
-                    android:text="Top Review"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recommendations_list" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/reviewslist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12sp"
-                    android:minHeight="120dp"
-                    tools:itemCount="8"
-                    android:paddingBottom="10dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_review"
-                    tools:listitem="@layout/item_review" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_begin="126dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-
-    </RelativeLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

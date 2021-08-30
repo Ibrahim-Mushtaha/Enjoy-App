@@ -10,15 +10,15 @@
  <androidx.cardview.widget.CardView
      android:layout_width="160dp"
      android:layout_height="55dp"
-     app:cardCornerRadius="8dp"
-     app:cardElevation="2sp"
-     android:backgroundTint="@color/white"
-     android:layout_margin="4dp">
+     app:cardCornerRadius="@dimen/radius_8"
+     app:cardElevation="@dimen/elevation_4"
+     android:backgroundTint="@color/purple_200"
+     android:layout_marginHorizontal="@dimen/margin_8"
+     android:layout_marginVertical="@dimen/margin_4">
 
      <RelativeLayout
          android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:backgroundTint="@color/white">
+         android:layout_height="match_parent">
 
          <TextView
              android:id="@+id/tv_category_title"
@@ -32,7 +32,7 @@
              android:paddingEnd="8dp"
              android:text="The Forgotte"
              android:textColor="@color/white"
-             android:textSize="16sp"
+             android:textSize="@dimen/font_14"
              android:textStyle="bold"
              android:layout_centerInParent="true"
               />

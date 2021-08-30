@@ -51,10 +51,7 @@
             android:gravity="start"
             android:maxLines="2"
             android:minLines="1"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="The Forgotten
-Hours"
+            android:text="The Forgotten Hours"
             android:textColor="@color/white"
             android:textSize="@dimen/font_14"
             android:textStyle="bold"
@@ -64,25 +61,35 @@ Hours"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvImageContainer" />
 
+        <RatingBar
+            android:id="@+id/movieRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize=".5"
+            android:theme="@style/RatingBarTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvRating"
+            tools:rating="5" />
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tvRating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:fontFamily="@font/cairo_regular"
             android:gravity="bottom"
             android:maxLines="2"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="$ 4.99"
+            android:text="5 Star"
             android:textColor="@color/white"
             android:textSize="@dimen/font_12"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/movieRating"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 

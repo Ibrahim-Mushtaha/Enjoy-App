@@ -19,25 +19,24 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
 class RecommendationsAdapter(
     var data: ArrayList<Content>, val itemclick: onClick
 ) :
-        RecyclerView.Adapter<RecommendationsAdapter.ViewHolder>() {
+    RecyclerView.Adapter<RecommendationsAdapter.ViewHolder>() {
 
     private var on_attach = true
     var DURATION: Long = 350
+
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_popular, parent, false)
-            )
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_popular, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
-
-
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -47,18 +46,20 @@ class RecommendationsAdapter(
 
         holder.itemView.apply {
 
-                Constant.setAnimation(this, position,on_attach,DURATION)
-                setImage(
-                    context,
-                    IMAGE_URL + currentItem.posterPath,
-                    tv_image,
-                    Color.TRANSPARENT
-                )
-                tv_title.text = currentItem.title
-                tv_price.text = currentItem.id.toString()
+            Constant.setAnimation(this, position, on_attach, DURATION)
+            setImage(
+                context,
+                IMAGE_URL + currentItem.posterPath,
+                tv_image,
+                Color.TRANSPARENT
+            )
+            tv_title.text = currentItem.title
+            val movieRate = (currentItem.voteAverage!! / 2).toFloat()
+            tvRating.text = movieRate.toString()
+            movieRating.rating = movieRate
 
             setOnClickListener {
-                itemclick.onClickItem(data[position],position,1)
+                itemclick.onClickItem(data[position], position, 1)
             }
         }
 
@@ -78,8 +79,6 @@ class RecommendationsAdapter(
     interface onClick {
         fun onClickItem(content: Content, position: Int, type: Int)
     }
-
-
 
 
 }

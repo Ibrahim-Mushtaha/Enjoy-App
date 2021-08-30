@@ -14,6 +14,7 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.DURATION
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.on_attach
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
+import kotlinx.android.synthetic.main.item_popular.view.*
 
 
 class ReviewsAdapter(
@@ -52,9 +53,8 @@ class ReviewsAdapter(
             )
             tv_review_name.text = currentItem.authorDetails.name
             tv_review_note.text = currentItem.content
-            tvrating.rating = if (currentItem.authorDetails.rating!! == 0) 0f
-            else
-                (currentItem.authorDetails.rating / 2).toFloat()
+            val authorRate = (currentItem.authorDetails.rating!! / 2).toFloat()
+            tvrating.rating = authorRate
 
 
             setOnClickListener {

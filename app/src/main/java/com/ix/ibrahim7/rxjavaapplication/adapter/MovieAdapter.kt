@@ -85,7 +85,9 @@ class MovieAdapter(
                             Color.TRANSPARENT
                         )
                         tv_title.text = currentItem.title
-                        tv_price.text = currentItem.id.toString()
+                        val movieRate = (currentItem.voteAverage!! / 2).toFloat()
+                        tvRating.text = movieRate.toString()
+                        movieRating.rating = movieRate
                     }
                     2->{
                         Constant.setAnimation(this, position,on_attach,DURATION)
