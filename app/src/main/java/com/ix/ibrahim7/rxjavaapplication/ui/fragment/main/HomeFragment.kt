@@ -104,12 +104,12 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         }
 
 
-        mBinding.btnMoreUpcoming.setOnClickListener {
+       /* mBinding.btnMoreUpcoming.setOnClickListener {
             val bundle = Bundle().apply {
                 putInt(TYPE,2)
             }
             findNavController().navigate(R.id.action_homeFragment_to_allListFragment,bundle)
-        }
+        }*/
 
         mBinding.pupularList.apply {
             adapter = pupular_adapter
@@ -184,8 +184,8 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
     private fun setUpViewpager() {
         imageAdapter.data.clear()
-        imageAdapter.data.add(R.drawable.ic_slider1)
-        imageAdapter.data.add(R.drawable.ic_slider2)
+      //  imageAdapter.data.add(R.drawable.ic_slider1)
+       // imageAdapter.data.add(R.drawable.ic_slider2)
         view_pager.apply {
             if (imageAdapter.data.size == 0) {
                 view_pager.visibility = View.GONE
