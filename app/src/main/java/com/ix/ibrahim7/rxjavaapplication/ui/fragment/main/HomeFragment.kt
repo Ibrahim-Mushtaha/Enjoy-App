@@ -12,13 +12,16 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
+import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
+import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.ImageSliderAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MenuAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
 import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
+import com.ix.ibrahim7.rxjavaapplication.other.EnumConstant
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,7 +32,10 @@ import com.ix.ibrahim7.rxjavaapplication.util.ZoomAnimation
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 
-class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
+class HomeFragment : Fragment(),
+    MovieAdapter.onClick ,
+    MenuAdapter.onClick,
+    GenericAdapter.OnListItemViewClickListener<Content>{
 
     private val mBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
@@ -43,6 +49,10 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
     private val pupular_adapter by lazy {
         MovieAdapter(ArrayList(),1,this)
+    }
+
+    private val trailerAdapter by lazy {
+        GenericAdapter(R.layout.item_trailer,BR.MovieTrailer,this)
     }
 
     private val popularAdapter by lazy {
@@ -78,9 +88,9 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
         menuAdapter.data.apply {
             clear()
-            add(MenuItem(1,"POPULAR",true))
-            add(MenuItem(1,"NOW",false))
-            add(MenuItem(1,"SOON",false))
+            add(MenuItem(EnumConstant.POPULAR,"POPULAR",true))
+            add(MenuItem(EnumConstant.NEW,"NOW",false))
+            add(MenuItem(EnumConstant.COMING_SOON,"SOON",false))
         }
 
         mBinding.listMenu.apply {
@@ -115,6 +125,10 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
             adapter = pupular_adapter
         }
 
+        mBinding.rcTrailer.apply {
+            adapter = trailerAdapter
+        }
+
         mBinding.upcomingList.apply {
             adapter = upcomingAdapter
         }
@@ -126,8 +140,9 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
                     pupular_adapter.data.clear()
                     pupular_adapter.data.addAll(it.data!!.contents!!)
                     pupular_adapter.notifyDataSetChanged()
+                    trailerAdapter.submitList(it.data.contents!!)
                     popularAdapter.data.clear()
-                    popularAdapter.data.addAll(it.data.contents!!)
+                    popularAdapter.data.addAll(it.data.contents)
                     popularAdapter.notifyDataSetChanged()
                     try {
                         loadingDialog!!.dismiss()
@@ -153,14 +168,11 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
                     upcomingAdapter.data.clear()
                     upcomingAdapter.data.addAll(it.data!!.contents!!)
                     upcomingAdapter.notifyDataSetChanged()
-                 //   Constant.dialog.dismiss()
                 }
                 is Resource.Error -> {
                     Log.e("eeee Error",it.message.toString())
-                  //  Constant.dialog.dismiss()
                 }
                 is Resource.Loading -> {
-                  //  Constant.showDialog(requireActivity())
                 }
             }
         })
@@ -184,8 +196,8 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
 
     private fun setUpViewpager() {
         imageAdapter.data.clear()
-      //  imageAdapter.data.add(R.drawable.ic_slider1)
-       // imageAdapter.data.add(R.drawable.ic_slider2)
+       imageAdapter.data.add(R.drawable.ic_image1)
+        imageAdapter.data.add(R.drawable.ic_image1)
         view_pager.apply {
             if (imageAdapter.data.size == 0) {
                 view_pager.visibility = View.GONE
@@ -213,8 +225,20 @@ class HomeFragment : Fragment(),MovieAdapter.onClick ,MenuAdapter.onClick {
         menuAdapter.notifyDataSetChanged()
 
         when(menuitem.code){
+            EnumConstant.POPULAR ->{
 
+            }
+            EnumConstant.NEW ->{
+
+            }
+            EnumConstant.COMING_SOON ->{
+
+            }
         }
+
+    }
+
+    override fun onClickItem(itemViewModel: Content, type: Int) {
 
     }
 

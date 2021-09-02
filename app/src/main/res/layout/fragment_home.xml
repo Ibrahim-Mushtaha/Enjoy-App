@@ -99,6 +99,33 @@
                     tools:listitem="@layout/item_popular" />
 
                 <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_4"
+                    android:layout_marginVertical="@dimen/margin_12"
+                    android:fontFamily="@font/cairo_regular"
+                    android:gravity="bottom"
+                    android:text="Trailer"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pupular_list" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcTrailer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    tools:itemCount="6"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:listitem="@layout/item_trailer" />
+                <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -112,7 +139,7 @@
                     android:textStyle="bold"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@+id/view_pager"
-                    app:layout_constraintTop_toBottomOf="@+id/pupular_list" />
+                    app:layout_constraintTop_toBottomOf="@+id/rcTrailer" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline4"
@@ -135,7 +162,7 @@
                     android:textStyle="bold"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pupular_list" />
+                    app:layout_constraintTop_toBottomOf="@+id/rcTrailer" />
 
                 <TextView
                     android:id="@+id/btn_more_pupuler"
@@ -157,13 +184,13 @@
                     android:id="@+id/upcoming_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_marginVertical="@dimen/margin_8"
                     android:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
                     tools:itemCount="6"
-                    tools:listitem="@layout/item_movie" />
+                    tools:listitem="@layout/item_upcoming" />
 
 
                 <View
