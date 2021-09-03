@@ -9,7 +9,7 @@ class ApiRepository {
         RetrofitInstance.api!!.getPupular(pageNumber = page)
 
     fun getUpcoming(page: Int) =
-        RetrofitInstance.api!!.getUpcoming(pageNumber = page)
+        RetrofitInstance.api!!.getUpComing(pageNumber = page)
 
 
     fun getMovieDetails(movieID: Int) =

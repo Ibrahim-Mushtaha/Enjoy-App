@@ -21,11 +21,53 @@ interface Api {
     ): Single<Movie>
 
     @GET("movie/upcoming")
-    fun getUpcoming(
+    fun getUpComing(
             @Query("page")
             pageNumber: Int = 1,
             @Query("language")
             language: String = "en-US",
+            @Query("api_key")
+            apiKey: String = API_KEY
+    ): Observable<Movie>
+
+    @GET("genre/movie/list")
+    fun getMovieList(
+            @Query("language")
+            language: String = "en-US",
+            @Query("api_key")
+            apiKey: String = API_KEY
+    ): Observable<Movie>
+
+   @GET("/genre/tv/list")
+    fun getTvShowList(
+            @Query("language")
+            language: String = "en-US",
+            @Query("api_key")
+            apiKey: String = API_KEY
+    ): Observable<Movie>
+
+    @GET("movie/top_rated")
+    fun getTopRated(
+            @Query("page")
+            pageNumber: Int = 1,
+            @Query("language")
+            language: String = "en-US",
+            @Query("api_key")
+            apiKey: String = API_KEY
+    ): Observable<Movie>
+
+    @GET("movie/now_playing")
+    fun getNowPlaying(
+            @Query("page")
+            pageNumber: Int = 1,
+            @Query("language")
+            language: String = "en-US",
+            @Query("api_key")
+            apiKey: String = API_KEY
+    ): Observable<Movie>
+
+    @GET("trending/movie/day")
+    fun getTrendingMovie(
             @Query("api_key")
             apiKey: String = API_KEY
     ): Observable<Movie>
