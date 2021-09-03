@@ -3,90 +3,89 @@ package com.ix.ibrahim7.rxjavaapplication.network
 import com.ix.ibrahim7.rxjavaapplication.model.details.MovieDetails
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.model.review.Reviews
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.API_KEY
+import retrofit2.Response
 
 interface MovieApi {
 
     @GET("movie/popular")
-    fun getPupular(
+    suspend fun getPopular(
             @Query("page")
             pageNumber: Int = 1,
             @Query("language")
             language: String = "en-US",
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Single<Movie>
+    ): Response<Movie>
 
     @GET("movie/upcoming")
-    fun getUpComing(
+    suspend fun getUpComing(
             @Query("page")
             pageNumber: Int = 1,
             @Query("language")
             language: String = "en-US",
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Observable<Movie>
+    ): Response<Movie>
 
     @GET("genre/movie/list")
-    fun getMovieList(
+    suspend fun getMovieList(
             @Query("language")
             language: String = "en-US",
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Observable<Movie>
+    ): Response<Movie>
 
    @GET("/genre/tv/list")
-    fun getTvShowList(
+    suspend fun getTvShowList(
             @Query("language")
             language: String = "en-US",
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Observable<Movie>
+    ): Response<Movie>
 
     @GET("movie/top_rated")
-    fun getTopRated(
+    suspend fun getTopRated(
             @Query("page")
             pageNumber: Int = 1,
             @Query("language")
             language: String = "en-US",
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Observable<Movie>
+    ): Response<Movie>
 
     @GET("movie/now_playing")
-    fun getNowPlaying(
+    suspend fun getNowPlaying(
             @Query("page")
             pageNumber: Int = 1,
             @Query("language")
             language: String = "en-US",
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Observable<Movie>
+    ): Response<Movie>
 
     @GET("trending/movie/day")
-    fun getTrendingMovie(
+    suspend fun getTrendingMovie(
             @Query("api_key")
             apiKey: String = API_KEY
-    ): Observable<Movie>
+    ): Response<Movie>
 
 
     @GET("movie/{movie_id}")
-    fun getMovieDetails(
+    suspend fun getMovieDetails(
         @Path("movie_id")
         movie_id: Int,
         @Query("language")
         language: String = "en-US",
         @Query("api_key")
         apiKey: String = API_KEY
-    ): Single<MovieDetails>
+    ): Response<MovieDetails>
 
 
 
     @GET("movie/{movie_id}/reviews")
-    fun getMovieReviews(
+    suspend fun getMovieReviews(
         @Path("movie_id")
         movie_id: Int,
         @Query("page")
@@ -95,11 +94,11 @@ interface MovieApi {
         language: String = "en-US",
         @Query("api_key")
         apiKey: String = API_KEY
-    ): Single<Reviews>
+    ): Response<Reviews>
 
 
     @GET("movie/{movie_id}/recommendations")
-    fun getMovieRecommendations(
+    suspend fun getMovieRecommendations(
         @Path("movie_id")
         movie_id: Int,
         @Query("page")
@@ -108,10 +107,10 @@ interface MovieApi {
         language: String = "en-US",
         @Query("api_key")
         apiKey: String = API_KEY
-    ): Single<Movie>
+    ): Response<Movie>
 
     @GET("movie/{movie_id}/similar")
-    fun getSimillerMovie(
+    suspend fun getSimillerMovie(
         @Path("movie_id")
         movie_id: Int,
         @Query("page")
@@ -120,7 +119,7 @@ interface MovieApi {
         language: String = "en-US",
         @Query("api_key")
         apiKey: String = API_KEY
-    ): Single<Movie>
+    ): Response<Movie>
 
 
     @GET("search/movie")
@@ -133,7 +132,7 @@ interface MovieApi {
         query: String,
         @Query("api_key")
         apiKey: String = API_KEY
-    ): Single<Movie>
+    ): Response<Movie>
 
 
 }

@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentAllListBinding
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
@@ -21,9 +24,11 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.TYPE
 import com.ix.ibrahim7.rxjavaapplication.util.OnScrollListener
 import com.ix.ibrahim7.rxjavaapplication.util.Resource
+import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
-
+@AndroidEntryPoint
 class AllListFragment : Fragment(),MovieAdapter.onClick {
 
     private val mBinding by lazy {
@@ -34,9 +39,8 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
         MovieAdapter(ArrayList(),4,this)
     }
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
+    @Inject
+    lateinit var viewModel: HomeViewModel
 
     private val getType by lazy {
         requireArguments().getInt(TYPE)
@@ -70,61 +74,78 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
 
       when(getType) {
           1 -> {
-              viewModel.dataPupularLiveData.observe(
-                  viewLifecycleOwner,
-                  androidx.lifecycle.Observer {
-                      when (it) {
-                          is Resource.Success -> {
-                              Log.e("eee data", it.data.toString())
-                              listAdapter.data.clear()
-                              listAdapter.data.addAll(it.data!!.contents!!)
-                              listAdapter.notifyDataSetChanged()
-                              try {
-                                  loadingDialog!!.dismiss()
-                              }catch (e:Exception) {}
-                          }
-                          is Resource.Error -> {
-                              Log.e("eeee Error", it.message.toString())
-                              try {
-                                  loadingDialog!!.dismiss()
-                              }catch (e:Exception) {}
-                          }
-                          is Resource.Loading -> {
-                              loadingDialog!!.show(childFragmentManager,"")
-                          }
-                      }
-                  })
+             subscribeToPopularObserver()
           }
           2 -> {
-              viewModel.dataUpcomingLiveData.observe(
-                  viewLifecycleOwner,
-                  androidx.lifecycle.Observer {
-                      when (it) {
-                          is Resource.Success -> {
-                              isLoading = false
-                              onScrollListener.totalCount = it.data!!.totalResults!!
-                              listAdapter.data.clear()
-                              listAdapter.data.addAll(it.data.contents!!)
-                              listAdapter.notifyDataSetChanged()
-                              Log.e("eee dataUpcoming", it.data.toString())
-                              Constant.dialog.dismiss()
-                          }
-                          is Resource.Error -> {
-                              isLoading = false
-                              Log.e("eeee Error", it.message.toString())
-                              Constant.dialog.dismiss()
-                          }
-                          is Resource.Loading -> {
-                              isLoading = true
-                              Constant.showDialog(requireActivity())
-                          }
-                      }
-                  })
+              subscribeToUpComingObserver()
           }
       }
 
 
 
+    }
+
+    private fun subscribeToPopularObserver() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                        loadingDialog!!.show(childFragmentManager,"")
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        val movie = resultResponse.data!! as Movie
+                        isLoading = false
+                        onScrollListener.totalCount = movie.totalResults!!
+                        listAdapter.data.clear()
+                        listAdapter.data.addAll(movie.contents!!)
+                        listAdapter.notifyDataSetChanged()
+                        Log.e("eee dataUpcoming", movie.toString())
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                    ResultRequest.Status.ERROR -> {
+                        Log.e("eeee Error",resultResponse.data.toString())
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                }
+            })
+        }
+    }
+    private fun subscribeToUpComingObserver() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                        loadingDialog!!.show(childFragmentManager,"")
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        val movie = resultResponse.data!! as Movie
+                        isLoading = false
+                        onScrollListener.totalCount = movie.totalResults!!
+                        listAdapter.data.clear()
+                        listAdapter.data.addAll(movie.contents!!)
+                        listAdapter.notifyDataSetChanged()
+                        Log.e("eee dataUpcoming", movie.toString())
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                    ResultRequest.Status.ERROR -> {
+                        Log.e("eeee Error",resultResponse.data.toString())
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                }
+            })
+        }
     }
 
     private val onScrollListener = OnScrollListener(isLoading, isLastPage, 0) {

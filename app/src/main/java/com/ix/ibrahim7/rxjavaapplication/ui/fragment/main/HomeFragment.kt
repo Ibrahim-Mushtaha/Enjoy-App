@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
 import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.EnumConstant
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
@@ -28,10 +30,13 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.TYPE
 import com.ix.ibrahim7.rxjavaapplication.util.Resource
+import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import com.ix.ibrahim7.rxjavaapplication.util.ZoomAnimation
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(),
     MovieAdapter.onClick ,
     MenuAdapter.onClick,
@@ -69,9 +74,9 @@ class HomeFragment : Fragment(),
     }
 
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
+    @Inject
+    lateinit var viewModel: HomeViewModel
+
     val array = ArrayList<Content>()
     private var loadingDialog : LoadingDialog ?= null
 
@@ -133,49 +138,8 @@ class HomeFragment : Fragment(),
             adapter = upcomingAdapter
         }
 
-        viewModel.dataPupularLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            when (it) {
-                is Resource.Success -> {
-                    Log.e("eee data",it.data.toString())
-                    pupular_adapter.data.clear()
-                    pupular_adapter.data.addAll(it.data!!.contents!!)
-                    pupular_adapter.notifyDataSetChanged()
-                    trailerAdapter.submitList(it.data.contents!!)
-                    popularAdapter.data.clear()
-                    popularAdapter.data.addAll(it.data.contents)
-                    popularAdapter.notifyDataSetChanged()
-                    try {
-                        loadingDialog!!.dismiss()
-                    }catch (e:Exception) {}
-                }
-                is Resource.Error -> {
-                    Log.e("eeee Error",it.message.toString())
-                    try {
-                        loadingDialog!!.dismiss()
-                    }catch (e:Exception) {}
-                }
-                is Resource.Loading -> {
-                    loadingDialog!!.show(childFragmentManager,"")
-                }
-            }
-        })
-
-
-        viewModel.dataUpcomingLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            when (it) {
-                is Resource.Success -> {
-                    Log.e("eee data",it.data.toString())
-                    upcomingAdapter.data.clear()
-                    upcomingAdapter.data.addAll(it.data!!.contents!!)
-                    upcomingAdapter.notifyDataSetChanged()
-                }
-                is Resource.Error -> {
-                    Log.e("eeee Error",it.message.toString())
-                }
-                is Resource.Loading -> {
-                }
-            }
-        })
+        subscribeToPopularObserver()
+        subscribeToUpComingObserver()
 
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -192,6 +156,60 @@ class HomeFragment : Fragment(),
         })
     }
 
+    private fun subscribeToPopularObserver() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                        loadingDialog!!.show(childFragmentManager,"")
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        pupular_adapter.data.clear()
+                        val movie = resultResponse.data!! as Movie
+                        pupular_adapter.data.addAll(movie.contents!!)
+                        pupular_adapter.notifyDataSetChanged()
+                        trailerAdapter.submitList(movie.contents!!)
+                        popularAdapter.data.clear()
+                        popularAdapter.data.addAll(movie.contents!!)
+                        popularAdapter.notifyDataSetChanged()
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                    ResultRequest.Status.ERROR -> {
+                        Log.e("eeee Error",resultResponse.data.toString())
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                }
+            })
+        }
+    }
+
+    private fun subscribeToUpComingObserver() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataUpcomingLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        val movie = resultResponse.data!! as Movie
+                        upcomingAdapter.data.clear()
+                        upcomingAdapter.data.addAll(movie.contents!!)
+                        upcomingAdapter.notifyDataSetChanged()
+
+                    }
+                    ResultRequest.Status.ERROR -> {
+                    }
+                }
+            })
+        }
+    }
 
 
     private fun setUpViewpager() {

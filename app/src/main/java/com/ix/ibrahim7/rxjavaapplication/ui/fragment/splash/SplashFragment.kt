@@ -12,8 +12,10 @@ import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentSplashBinding
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.SplashState
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.SplashViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
 
     private lateinit var mBinding: FragmentSplashBinding

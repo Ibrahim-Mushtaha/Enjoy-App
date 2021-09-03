@@ -1,67 +1,37 @@
 package com.ix.ibrahim7.rxjavaapplication.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
-import com.ix.ibrahim7.rxjavaapplication.repository.ApiRepository
-import com.ix.ibrahim7.rxjavaapplication.util.Resource
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.schedulers.Schedulers.io
-import java.util.concurrent.TimeUnit
+import com.ix.ibrahim7.rxjavaapplication.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    val movieRepository: MovieRepository,
+    application: Application
+) : AndroidViewModel(application) {
 
-    private val repository = ApiRepository()
-    val dataPupularLiveData = MutableLiveData<Resource<Movie>>()
-    val dataUpcomingLiveData = MutableLiveData<Resource<Movie>>()
-    private val compositeDisposable = CompositeDisposable()
     var data: Movie? = null
 
     var arrayList = ArrayList<Movie>()
-    var page = 1
 
-    fun getPupular() {
-        dataPupularLiveData.postValue(Resource.Loading())
-     val observable = repository.getPupular(page)
-         .subscribeOn(Schedulers.io())
-         .observeOn(AndroidSchedulers.mainThread())
-         .subscribe(
-              {c->
-               /*   page++
-                  if (data == null){
-                      data = c*/
-                      dataPupularLiveData.postValue(Resource.Success(c))
-                      Log.e("eee dataPupular",data.toString())
-/*                  }else{
-                      val oldData = c
-                      oldData!!.results!!.addAll(c.results!!)
-                      dataPupularLiveData.postValue(Resource.Success(oldData))
-                      Log.e("eee data2",oldData.toString())
-                  }*/
+    val dataPopularLiveData = movieRepository.dataPopularLiveData
+    val dataUpcomingLiveData = movieRepository.dataUpcomingLiveData
 
-              },
-              {x->
-                  dataPupularLiveData.postValue(Resource.Error(x.message.toString(),null))
-                  Log.e("eee onError", x?.message.toString())
-              })
-
-          compositeDisposable.add(observable)
-      }
+    fun getPopularMovie() =  movieRepository.getPopularMovie()
+    fun getUpComingMovie() =  movieRepository.getUpComingMovie()
 
 
-    fun getUpcoming() {
+/*    fun getUpcoming() {
         dataUpcomingLiveData.postValue(Resource.Loading())
         val observable = repository.getUpcoming(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {c->
-                  /*  if (page == 1){
+                  *//*  if (page == 1){
                         data = c
                         arrayList.clear()
                         arrayList.add(data!!)
@@ -73,7 +43,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                         arrayList.add(oldData)
                         dataUpcomingLiveData.postValue(Resource.Success(data!!))
                         Log.e("eee dataUpcoming1",oldData.toString())
-                    }*/
+                    }*//*
                     page++
                     if (data == null){
                         data = c
@@ -122,19 +92,15 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
 
         compositeDisposable.add(observable)
-    }
+    }*/
 
 
     init {
-        getPupular()
-        getUpcoming()
+        getPopularMovie()
+        getUpComingMovie()
     }
 
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
 
 
 
