@@ -12,14 +12,14 @@ class RetrofitInstance {
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"
 
-        var api: Api? = null
+        var api: MovieApi? = null
 
         init {
 
             val client = OkHttpClient.Builder()
                 .build()
 
-            api = getInstantRetrofit(BASE_URL, client).create(Api::class.java)
+            api = getInstantRetrofit(BASE_URL, client).create(MovieApi::class.java)
 
 
         }

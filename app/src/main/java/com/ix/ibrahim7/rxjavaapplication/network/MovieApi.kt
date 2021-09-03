@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.API_KEY
 
-interface Api {
+interface MovieApi {
 
     @GET("movie/popular")
     fun getPupular(

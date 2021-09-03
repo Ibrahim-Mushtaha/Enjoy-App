@@ -6,6 +6,7 @@ const val TWO = 2
 const val THREE = 3
 const val FOUR = 4
 
+const val BASE_URL = "https://api.themoviedb.org/3/"
 const val ACCESSTOKEN = "AccessTOKEN"
 const val APPLICATIONJSON = "application/json"
 const val CONTENT_TYPE = "text/plain"
