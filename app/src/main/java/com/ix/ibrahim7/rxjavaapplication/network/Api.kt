@@ -10,8 +10,6 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.API_KEY
 
 interface Api {
 
-
-
     @GET("movie/popular")
     fun getPupular(
             @Query("page")
