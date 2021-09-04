@@ -14,6 +14,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
+import androidx.navigation.NavOptions
 import com.google.android.material.snackbar.Snackbar
 import com.ix.ibrahim7.rxjavaapplication.BuildConfig
 import com.ix.ibrahim7.rxjavaapplication.R
@@ -154,6 +155,15 @@ fun Activity.shareApplication() {
     } catch (e: IOException) {
         e.printStackTrace()
     }
+}
+
+fun getNavOptions(): NavOptions {
+    return NavOptions.Builder()
+        .setEnterAnim(R.anim.slide_up)
+        .setExitAnim(R.anim.slide_down)
+        .setPopEnterAnim(R.anim.slide_up)
+        .setPopExitAnim(R.anim.slide_down)
+        .build()
 }
 
 

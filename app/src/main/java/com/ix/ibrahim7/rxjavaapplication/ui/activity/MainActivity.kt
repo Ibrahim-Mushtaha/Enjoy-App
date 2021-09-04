@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.ActivityMainBinding
+import com.ix.ibrahim7.rxjavaapplication.other.getNavOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setUpStatusBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,15 +85,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-    }
-
-    private fun getNavOptions(): NavOptions {
-        return NavOptions.Builder()
-            .setEnterAnim(R.anim.slide_up)
-            .setExitAnim(R.anim.slide_down)
-            .setPopEnterAnim(R.anim.slide_up)
-            .setPopExitAnim(R.anim.slide_down)
-            .build()
     }
 
 }
