@@ -14,7 +14,6 @@ class HomeViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     var data: Movie? = null
-
     var arrayList = ArrayList<Movie>()
 
     val dataPopularLiveData = movieRepository.dataPopularLiveData
