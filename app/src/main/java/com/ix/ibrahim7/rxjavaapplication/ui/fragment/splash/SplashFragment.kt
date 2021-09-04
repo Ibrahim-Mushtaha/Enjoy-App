@@ -14,14 +14,15 @@ import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.SplashState
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
 
     private lateinit var mBinding: FragmentSplashBinding
 
-
-    private val viewModel: SplashViewModel by viewModels()
+    @Inject
+    lateinit var viewModel: SplashViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
