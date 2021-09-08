@@ -73,7 +73,6 @@ class HomeFragment : Fragment(),
         MenuAdapter(ArrayList(),this)
     }
 
-
     @Inject
     lateinit var viewModel: HomeViewModel
 
@@ -139,7 +138,9 @@ class HomeFragment : Fragment(),
         }
 
         subscribeToPopularObserver()
-        subscribeToUpComingObserver()
+     //   subscribeToUpComingObserver()
+        subscribeToTrailerObserver()
+        subscribeToTrendingObserver()
 
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -166,14 +167,14 @@ class HomeFragment : Fragment(),
                     }
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
-                        pupular_adapter.data.clear()
                         val movie = resultResponse.data!! as Movie
+                        pupular_adapter.data.clear()
                         pupular_adapter.data.addAll(movie.contents!!)
                         pupular_adapter.notifyDataSetChanged()
-                        trailerAdapter.submitList(movie.contents!!)
                         popularAdapter.data.clear()
-                        popularAdapter.data.addAll(movie.contents!!)
+                        popularAdapter.data.addAll(movie.contents)
                         popularAdapter.notifyDataSetChanged()
+                      //  trailerAdapter.submitList(movie.contents!!)
                         try {
                             loadingDialog!!.dismiss()
                         }catch (e:Exception) {}
@@ -189,10 +190,58 @@ class HomeFragment : Fragment(),
         }
     }
 
-    private fun subscribeToUpComingObserver() {
+    private fun subscribeToTrailerObserver() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataTopRatedLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                        //loadingDialog!!.show(childFragmentManager,"")
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        val movie = resultResponse.data!! as Movie
+                        trailerAdapter.submitList(movie.contents!!)
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                    ResultRequest.Status.ERROR -> {
+                        Log.e("eeee Error",resultResponse.data.toString())
+                        try {
+                            loadingDialog!!.dismiss()
+                        }catch (e:Exception) {}
+                    }
+                }
+            })
+        }
+    }
+
+    /*private fun subscribeToUpComingObserver() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.dataUpcomingLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        val movie = resultResponse.data!! as Movie
+                        upcomingAdapter.data.clear()
+                        upcomingAdapter.data.addAll(movie.contents!!)
+                        upcomingAdapter.notifyDataSetChanged()
+
+                    }
+                    ResultRequest.Status.ERROR -> {
+                    }
+                }
+            })
+        }
+    }*/
+
+    private fun subscribeToTrendingObserver() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataTrendingLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
                 when (resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
                     }

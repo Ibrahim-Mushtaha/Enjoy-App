@@ -18,6 +18,9 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
 
     val dataPopularLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataUpcomingLiveData = MutableLiveData<ResultRequest<Any>>()
+    val dataTopRatedLiveData = MutableLiveData<ResultRequest<Any>>()
+    val dataTrendingLiveData = MutableLiveData<ResultRequest<Any>>()
+
     val dataDetailsLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataReviewsLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataRecommendationLiveData = MutableLiveData<ResultRequest<Any>>()
@@ -104,6 +107,92 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 } catch (t: Throwable) {
                     Log.e("upComingMovieErrorThrowable", t.message.toString())
                     dataUpcomingLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun getTopRated() {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataTopRatedLiveData.postValue(ResultRequest.loading("loading"))
+            val response = movieApi.getTopRated(page)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            dataTopRatedLiveData.postValue(ResultRequest.success(it))
+                            Log.e("topRatedMovieSuccess", it.toString())
+                        }
+
+                    } else {
+                        Log.e("topRatedMovieErrorRequest", response.errorBody().toString())
+                        dataTopRatedLiveData.postValue(
+                            ResultRequest.error(
+                                "Ooops: ${response.errorBody()}",
+                                response
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    Log.e("topRatedMovieErrorHttp", e.message().toString())
+                    dataTopRatedLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    Log.e("topRatedMovieErrorThrowable", t.message.toString())
+                    dataTopRatedLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun getTrendingMovie() {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataTrendingLiveData.postValue(ResultRequest.loading("loading"))
+            val response = movieApi.getTrendingMovie()
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            dataTrendingLiveData.postValue(ResultRequest.success(it))
+                            Log.e("trendingMovieSuccess", it.toString())
+                        }
+
+                    } else {
+                        Log.e("trendingMovieErrorRequest", response.errorBody().toString())
+                        dataTrendingLiveData.postValue(
+                            ResultRequest.error(
+                                "Ooops: ${response.errorBody()}",
+                                response
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    Log.e("trendingMovieErrorHttp", e.message().toString())
+                    dataTrendingLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    Log.e("trendingMovieErrorThrowable", t.message.toString())
+                    dataTrendingLiveData.postValue(
                         ResultRequest.error(
                             "Ooops: ${t.message}",
                             t
