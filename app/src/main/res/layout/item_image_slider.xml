@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="Slider"
+            type="com.ix.ibrahim7.rxjavaapplication.model.movie.Content" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -19,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
+                loadImage="@{`https://image.tmdb.org/t/p/original` + Slider.posterPath}"
                 android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 </layout>

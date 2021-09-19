@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="Review"
+            type="com.ix.ibrahim7.rxjavaapplication.model.review.Content" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -30,6 +32,7 @@
             android:layout_height="80dp"
             app:riv_corner_radius="8dp"
             android:elevation="8dp"
+            loadImage="@{`https://image.tmdb.org/t/p/original` + Review.authorDetails.avatarPath}"
             android:layout_marginStart="4dp"
             android:scaleType="center"
             android:src="@drawable/ic_profile_img"
@@ -46,8 +49,8 @@
             android:fontFamily="@font/cairo_regular"
             android:gravity="bottom"
             android:maxLines="2"
-            android:text="The Forgotten
-Hours"
+            tools:text="The Forgotten Hours"
+            android:text="@{Review.author}"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16"
@@ -69,7 +72,8 @@ Hours"
             android:maxLines="1"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="$ 4.99"
+            tools:text="very good"
+            android:text="@{Review.content}"
             android:textAlignment="viewStart"
             android:textColor="@color/gray_lite"
             android:textSize="@dimen/font_14"
@@ -90,7 +94,7 @@ Hours"
             android:theme="@style/RatingBarTheme"
             app:layout_constraintStart_toStartOf="@+id/tv_review_note"
             app:layout_constraintTop_toBottomOf="@+id/tv_review_note"
-            tools:rating="5" />
+            tools:rating="@{Review.authorDetails.rating != null ? Review.authorDetails.rating : 0}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import java.lang.Exception
@@ -33,6 +34,7 @@ object HolderAdapter {
                 .with(image.context)
                 .load(img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions().transform(CenterCrop()))
                 .into(image)
         } catch (e: Exception) {
@@ -48,6 +50,7 @@ object HolderAdapter {
                 .with(view.context)
                 .load(path)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions().transform(CenterCrop()))
                 .into(view)
         } catch (e: Exception) {

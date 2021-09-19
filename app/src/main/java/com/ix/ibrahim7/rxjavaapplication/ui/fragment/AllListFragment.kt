@@ -36,7 +36,7 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
     }
 
     private val listAdapter by lazy {
-        MovieAdapter(ArrayList(),4,this)
+        MovieAdapter(ArrayList(),2,this)
     }
 
     @Inject

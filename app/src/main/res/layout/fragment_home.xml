@@ -97,7 +97,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
                     tools:itemCount="6"
                     tools:layout_editor_absoluteX="0dp"
-                    tools:listitem="@layout/item_popular" />
+                    tools:listitem="@layout/item_main_movie" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -192,7 +192,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
                     tools:itemCount="6"
-                    tools:listitem="@layout/item_upcoming" />
+                    tools:listitem="@layout/item_full_movie_width" />
 
 
                 <View

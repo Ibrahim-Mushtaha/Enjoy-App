@@ -16,7 +16,6 @@ import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
-import com.ix.ibrahim7.rxjavaapplication.adapter.ImageSliderAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MenuAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
@@ -29,7 +28,6 @@ import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.TYPE
-import com.ix.ibrahim7.rxjavaapplication.util.Resource
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import com.ix.ibrahim7.rxjavaapplication.util.ZoomAnimation
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,8 +46,15 @@ class HomeFragment : Fragment(),
 
     private var selectedItemPos = 0
 
-    private val imageAdapter by lazy {
-        ImageSliderAdapter(ArrayList())
+    private val sliderAdapter by lazy {
+        GenericAdapter(R.layout.item_image_slider,BR.Slider,
+            object :GenericAdapter.OnListItemViewClickListener<Content>{
+                override fun onClickItem(itemViewModel: Content, type: Int) {
+
+                }
+
+            }
+        )
     }
 
     private val pupular_adapter by lazy {
@@ -149,7 +154,7 @@ class HomeFragment : Fragment(),
                 positionOffsetPixels: Int
             ) {
                 Glide.with(requireActivity())
-                    .load(Constant.IMAGE_URL + popularAdapter.data[position].backdropPath)
+                    .load(Constant.IMAGE_URL + sliderAdapter.differ.currentList[position].backdropPath)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(bitmapTransform(BlurTransformation(16, 3)))
                     .into(mBinding.tvImageSliderBackground)
@@ -171,9 +176,7 @@ class HomeFragment : Fragment(),
                         pupular_adapter.data.clear()
                         pupular_adapter.data.addAll(movie.contents!!)
                         pupular_adapter.notifyDataSetChanged()
-                        popularAdapter.data.clear()
-                        popularAdapter.data.addAll(movie.contents!!)
-                        popularAdapter.notifyDataSetChanged()
+                        sliderAdapter.submitList(movie.contents)
                       //  trailerAdapter.submitList(movie.contents!!)
                         try {
                             loadingDialog!!.dismiss()
@@ -262,14 +265,8 @@ class HomeFragment : Fragment(),
 
 
     private fun setUpViewpager() {
-        imageAdapter.data.clear()
-       imageAdapter.data.add(R.drawable.ic_image1)
-        imageAdapter.data.add(R.drawable.ic_image1)
         view_pager.apply {
-            if (imageAdapter.data.size == 0) {
-                view_pager.visibility = View.GONE
-            }
-            adapter = popularAdapter
+            adapter = sliderAdapter
             setPageTransformer(ZoomAnimation())
         }
     }

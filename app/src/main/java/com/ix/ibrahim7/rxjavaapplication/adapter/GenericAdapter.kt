@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ix.ibrahim7.rxjavaapplication.util.Constant
 
 class GenericAdapter<T>(
     @LayoutRes val layoutId: Int,
@@ -47,6 +48,7 @@ class GenericAdapter<T>(
         val itemViewModel = differ.currentList[position]
         holder.bind(itemViewModel, type)
         holder.itemView.apply {
+        Constant.setAnimation(this, position, Constant.on_attach, Constant.DURATION)
 
             setOnClickListener {
                 itemclick.onClickItem(itemViewModel,1)

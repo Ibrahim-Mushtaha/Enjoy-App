@@ -13,12 +13,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
-import com.ix.ibrahim7.rxjavaapplication.adapter.GenresAdapter
-import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
-import com.ix.ibrahim7.rxjavaapplication.adapter.RecommendationsAdapter
-import com.ix.ibrahim7.rxjavaapplication.adapter.ReviewsAdapter
+import com.ix.ibrahim7.rxjavaapplication.adapter.*
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentDetailsBinding
+import com.ix.ibrahim7.rxjavaapplication.model.details.Genre
 import com.ix.ibrahim7.rxjavaapplication.model.details.MovieDetails
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
@@ -35,23 +34,34 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.onClick,ReviewsAdapter.onClick {
+class DetailsFragment : Fragment(),
+    MovieAdapter.onClick,
+    RecommendationsAdapter.onClick,
+    GenericAdapter.OnListItemViewClickListener<Genre>{
 
     lateinit var mBinding: FragmentDetailsBinding
 
     @Inject
     lateinit var viewModel: DetailsViewModel
 
-    private val genres_adapter by lazy {
-        GenresAdapter(ArrayList())
+    private val genresAdapter by lazy {
+      GenericAdapter(R.layout.item_category,BR.Genre,this)
+    }
+
+    private val reviewsAdapter by lazy {
+        GenericAdapter(R.layout.item_review,BR.Review,object : GenericAdapter.OnListItemViewClickListener<com.ix.ibrahim7.rxjavaapplication.model.review.Content>{
+            override fun onClickItem(
+                itemViewModel: com.ix.ibrahim7.rxjavaapplication.model.review.Content,
+                type: Int
+            ) {
+
+            }
+
+        })
     }
 
     private val movie_adapter by lazy {
         MovieAdapter(ArrayList(),1,this)
-    }
-
-    private val reviews_adapter by lazy {
-        ReviewsAdapter(ArrayList(),this)
     }
 
     private val recommendations_adapter by lazy {
@@ -89,7 +99,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
 
         mBinding.apply {
             genresList.apply {
-                adapter=genres_adapter
+                adapter=genresAdapter
             }
 
             similarList.apply {
@@ -99,7 +109,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                 adapter=recommendations_adapter
             }
             reviewslist.apply {
-                adapter=reviews_adapter
+                adapter=reviewsAdapter
             }
         }
 
@@ -136,8 +146,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                                     tvImage,
                                     R.color.purple
                                 )
-                                genres_adapter.data.addAll(movie.genres!!)
-                                genres_adapter.notifyDataSetChanged()
+                                genresAdapter.submitList(movie.genres!!)
                                 tvMovieName.text = movie.title
                                 movieRating.rating = (movie.voteAverage!! / 2).toFloat()
                                 tvRating.text = (movie.voteAverage / 2).toFloat().toString()
@@ -178,9 +187,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                         (resultResponse.data as Reviews).let { review ->
                             mBinding.apply {
                                     if (review.contents!!.isNotEmpty()) {
-                                        reviews_adapter.data.clear()
-                                        reviews_adapter.data.addAll(review.contents)
-                                        reviews_adapter.notifyDataSetChanged()
+                                        reviewsAdapter.submitList(review.contents)
                                     }
                                 }
                         }
@@ -266,12 +273,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
     }
 
 
-
-    override fun onClickItem(
-        content: com.ix.ibrahim7.rxjavaapplication.model.review.Content,
-        position: Int,
-        type: Int
-    ) {
+    override fun onClickItem(itemViewModel: Genre, type: Int) {
 
     }
 

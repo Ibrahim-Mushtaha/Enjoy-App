@@ -13,12 +13,10 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.DURATION
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.on_attach
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
-import kotlinx.android.synthetic.main.item_all_list.view.*
+import kotlinx.android.synthetic.main.item_full_movie_width.view.*
 import kotlinx.android.synthetic.main.item_image_slider.view.*
-import kotlinx.android.synthetic.main.item_popular.view.*
-import kotlinx.android.synthetic.main.item_upcoming.view.*
-import kotlinx.android.synthetic.main.item_upcoming.view.tv_description
-import kotlinx.android.synthetic.main.item_upcoming.view.tv_title
+import kotlinx.android.synthetic.main.item_main_movie.view.*
+import kotlinx.android.synthetic.main.item_main_movie.view.tv_title
 
 
 class MovieAdapter(
@@ -34,25 +32,19 @@ class MovieAdapter(
             1 -> {
                 return ViewHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_popular, parent, false)
+                        .inflate(R.layout.item_main_movie, parent, false)
                 )
             }
             2 -> {
                 return ViewHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_upcoming, parent, false)
-                )
-            }
-            3 -> {
-                return ViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_image_slider, parent, false)
+                        .inflate(R.layout.item_full_movie_width, parent, false)
                 )
             }
             else -> {
                 return ViewHolder(
                     LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_all_list, parent, false)
+                        .inflate(R.layout.item_image_slider, parent, false)
                 )
             }
         }
@@ -102,26 +94,14 @@ class MovieAdapter(
                         tvRatingUpComing.text = movieRate.toString()
                         movieRatingUpComing.rating = movieRate
                     }
-                    3->{
-                        Constant.setAnimation(this, position,on_attach,DURATION)
+                    else -> {
+                        Constant.setAnimation(this, position, on_attach, DURATION)
                         setImage(
                             context,
                             IMAGE_URL + currentItem.posterPath,
                             tv_image_slider,
                             Color.TRANSPARENT
                         )
-                    }
-                    else ->{
-                        Constant.setAnimation(this, position,on_attach,DURATION)
-                        setImage(
-                            context,
-                            IMAGE_URL + currentItem.posterPath,
-                            tv_image_list,
-                            Color.TRANSPARENT
-                        )
-                        tv_title2.text = currentItem.title
-                        tv_description2.text = currentItem.overview.toString()
-                        tv_release_day2.text = currentItem.releaseDate.toString()
                     }
                 }
 

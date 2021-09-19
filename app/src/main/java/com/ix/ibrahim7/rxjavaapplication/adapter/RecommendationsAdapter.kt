@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
-import kotlinx.android.synthetic.main.item_popular.view.*
-import kotlinx.android.synthetic.main.item_popular.view.tv_image
-import kotlinx.android.synthetic.main.item_popular.view.tv_title
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
+import kotlinx.android.synthetic.main.item_main_movie.view.*
 
 
 class RecommendationsAdapter(
@@ -30,7 +28,7 @@ class RecommendationsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_popular, parent, false)
+                .inflate(R.layout.item_main_movie, parent, false)
         )
     }
 
