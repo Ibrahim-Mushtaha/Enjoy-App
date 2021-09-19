@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.item_image_slider.view.*
 import kotlinx.android.synthetic.main.item_popular.view.*
 import kotlinx.android.synthetic.main.item_upcoming.view.*
 import kotlinx.android.synthetic.main.item_upcoming.view.tv_description
-import kotlinx.android.synthetic.main.item_upcoming.view.tv_release_day
 import kotlinx.android.synthetic.main.item_upcoming.view.tv_title
 
 
@@ -99,7 +98,9 @@ class MovieAdapter(
                         )
                         tv_title.text = currentItem.title
                         tv_description.text = currentItem.overview.toString()
-                        tv_release_day.text = currentItem.releaseDate.toString()
+                        val movieRate = (currentItem.voteAverage!! / 2).toFloat()
+                        tvRatingUpComing.text = movieRate.toString()
+                        movieRatingUpComing.rating = movieRate
                     }
                     3->{
                         Constant.setAnimation(this, position,on_attach,DURATION)

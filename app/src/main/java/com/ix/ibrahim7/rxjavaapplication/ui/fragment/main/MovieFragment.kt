@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
@@ -18,6 +19,7 @@ import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
+import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Resource
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,7 +102,14 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
 
 
     override fun onClickItem(itemViewModel: Content, type: Int) {
-
+        when(type){
+            1->{
+                val bundle = Bundle().apply {
+                    putInt(Constant.MOVIE_ID,itemViewModel.id!!.toInt())
+                }
+                findNavController().navigate(R.id.action_movieFragment2_to_detailsFragment,bundle)
+            }
+        }
     }
 
 }

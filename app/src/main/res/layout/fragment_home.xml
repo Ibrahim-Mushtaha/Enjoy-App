@@ -26,7 +26,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/purple">
 
-
                 <ImageView
                     android:id="@+id/tvImageSliderBackground"
                     android:layout_width="match_parent"
@@ -52,6 +51,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="46dp"
                     android:layout_marginEnd="4dp"
+                    android:minHeight="342dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
+                    android:minHeight="265dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
                     tools:itemCount="6"
@@ -120,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
+                    android:minHeight="142dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/textView4"
                     tools:itemCount="6"

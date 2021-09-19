@@ -64,7 +64,15 @@
     <fragment
         android:id="@+id/movieFragment2"
         android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.MovieFragment"
-        android:label="MovieFragment" />
+        android:label="MovieFragment" >
+        <action
+            android:id="@+id/action_movieFragment2_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.MoreFragment"

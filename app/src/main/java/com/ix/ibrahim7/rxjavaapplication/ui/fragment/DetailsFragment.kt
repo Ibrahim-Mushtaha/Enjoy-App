@@ -235,7 +235,7 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
                             mBinding.apply {
                                     if (movie.contents!!.isNotEmpty()) {
                                         movie_adapter.data.clear()
-                                        movie_adapter.data.addAll(movie.contents)
+                                        movie_adapter.data.addAll(movie.contents!!)
                                         movie_adapter.notifyDataSetChanged()
                                     }
                                 }

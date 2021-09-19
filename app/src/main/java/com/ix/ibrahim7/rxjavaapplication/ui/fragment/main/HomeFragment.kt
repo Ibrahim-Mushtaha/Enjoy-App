@@ -172,7 +172,7 @@ class HomeFragment : Fragment(),
                         pupular_adapter.data.addAll(movie.contents!!)
                         pupular_adapter.notifyDataSetChanged()
                         popularAdapter.data.clear()
-                        popularAdapter.data.addAll(movie.contents)
+                        popularAdapter.data.addAll(movie.contents!!)
                         popularAdapter.notifyDataSetChanged()
                       //  trailerAdapter.submitList(movie.contents!!)
                         try {
