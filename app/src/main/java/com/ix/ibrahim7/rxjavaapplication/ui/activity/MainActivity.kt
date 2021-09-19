@@ -12,9 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.ActivityMainBinding
+import com.ix.ibrahim7.rxjavaapplication.other.*
+import com.ix.ibrahim7.rxjavaapplication.other.getDefaultLang
 import com.ix.ibrahim7.rxjavaapplication.other.getNavOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setUpStatusBar
+import com.ix.ibrahim7.rxjavaapplication.util.PreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,8 +30,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mbinding.root)
-
-        setUpStatusBar(this,0)
+        window.apply {
+            getDefaultLang{ lang->
+                if (!PreferencesManager(application).sharedPreference.getBoolean(PICKLANG,false)) {
+                    PreferencesManager(application).editor.putString(LANG, lang).apply()
+                    PreferencesManager(application).editor.putBoolean(PICKLANG, true).apply()
+                }
+            }
+        }
+       setUpStatusBar(this,0)
 
 
         navHostFragment = supportFragmentManager
@@ -62,21 +72,37 @@ class MainActivity : AppCompatActivity() {
                         window.apply {
                             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }
+                        setLanguage(PreferencesManager(application).sharedPreference.getString(
+                            LANG, AR)!!)
                         mbinding.bottomNavigation.visibility = View.GONE
                     }
                     R.id.homeFragment-> {
                         window.apply {
                             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }
+                        setLanguage(PreferencesManager(application).sharedPreference.getString(
+                            LANG, AR)!!)
                         mbinding.bottomNavigation.visibility = View.VISIBLE
+                    }
+                    R.id.detailsFragment-> {
+                        window.apply {
+                            addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+                        }
+                        setLanguage(PreferencesManager(application).sharedPreference.getString(
+                            LANG, AR)!!)
+                        mbinding.bottomNavigation.visibility = View.GONE
                     }
                     R.id.movieFragment2,R.id.tvShowFragment-> {
                         window.apply {
                             clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }
+                        setLanguage(PreferencesManager(application).sharedPreference.getString(
+                            LANG, AR)!!)
                         mbinding.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {
+                        setLanguage(PreferencesManager(application).sharedPreference.getString(
+                            LANG, AR)!!)
                         window.apply {
                             clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }

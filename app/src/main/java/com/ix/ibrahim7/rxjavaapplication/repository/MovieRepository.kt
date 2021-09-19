@@ -31,10 +31,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     var arrayList = ArrayList<Movie>()
     var page = 1
 
-    fun getPopularMovie() {
+    fun getPopularMovie(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataPopularLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getPopular(page)
+            val response = movieApi.getPopular(page,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -74,10 +74,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
         }
     }
 
-    fun getUpComingMovie() {
+    fun getUpComingMovie(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataUpcomingLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getUpComing(page)
+            val response = movieApi.getUpComing(page,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -117,10 +117,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
         }
     }
 
-    fun getTopRated() {
+    fun getTopRated(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataTopRatedLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getTopRated(page)
+            val response = movieApi.getTopRated(page,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -160,10 +160,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
         }
     }
 
-    fun getTrendingMovie() {
+    fun getTrendingMovie(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataTrendingLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getTrendingMovie()
+            val response = movieApi.getTrendingMovie(language = language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -203,10 +203,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
         }
     }
 
-    fun getMovieDetails(movieID: Int) {
+    fun getMovieDetails(movieID: Int,language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataDetailsLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getMovieDetails(movieID)
+            val response = movieApi.getMovieDetails(movieID,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -247,7 +247,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     }
 
 
-    fun getMovieReviews(movieID: Int) {
+    fun getMovieReviews(movieID: Int,language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataReviewsLiveData.postValue(ResultRequest.loading("loading"))
             val response = movieApi.getMovieReviews(movie_id = movieID)
@@ -290,10 +290,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
         }
     }
 
-    fun getMovieRecommendations(movieID: Int) {
+    fun getMovieRecommendations(movieID: Int,language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataRecommendationLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getMovieRecommendations(movie_id = movieID)
+            val response = movieApi.getMovieRecommendations(movie_id = movieID,language = language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -334,10 +334,10 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     }
 
 
-    fun getSimillerMovie(movieID: Int) {
+    fun getSimillerMovie(movieID: Int,language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataSimilarLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getSimillerMovie(movie_id = movieID)
+            val response = movieApi.getSimillerMovie(movie_id = movieID,language = language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {

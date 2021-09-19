@@ -49,7 +49,8 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog =  LoadingDialog.getInstance()
-        requireActivity().setToolbarView(mBinding.toolbarLayout,"Movie",true){}
+
+        requireActivity().setToolbarView(mBinding.toolbarLayout,getString(R.string.movie),true){}
 
         with(mBinding){
 

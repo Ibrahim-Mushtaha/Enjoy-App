@@ -49,7 +49,8 @@ class TvShowFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Co
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog =  LoadingDialog.getInstance()
-        requireActivity().setToolbarView(mBinding.toolbarLayout,"Tv Show",true){}
+
+        requireActivity().setToolbarView(mBinding.toolbarLayout,getString(R.string.tv_show),true){}
 
         with(mBinding){
 

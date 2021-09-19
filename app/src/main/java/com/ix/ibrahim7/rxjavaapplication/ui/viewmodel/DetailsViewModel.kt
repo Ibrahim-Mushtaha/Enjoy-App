@@ -16,9 +16,9 @@ class DetailsViewModel @Inject constructor(
     val dataRecommendationLiveData = movieRepository.dataRecommendationLiveData
     val dataSimilarLiveData = movieRepository.dataSimilarLiveData
 
-    fun getMovieDetails(movieID: Int) =  movieRepository.getMovieDetails(movieID)
-    fun getMovieReviews(movieID: Int) =  movieRepository.getMovieReviews(movieID)
-    fun getMovieRecommendations(movieID: Int) =  movieRepository.getMovieRecommendations(movieID)
-    fun getSimillerMovie(movieID: Int) =  movieRepository.getSimillerMovie(movieID)
+    fun getMovieDetails(movieID: Int,language:String) =  movieRepository.getMovieDetails(movieID,language)
+    fun getMovieReviews(movieID: Int,language:String) =  movieRepository.getMovieReviews(movieID,language)
+    fun getMovieRecommendations(movieID: Int,language:String) =  movieRepository.getMovieRecommendations(movieID,language)
+    fun getSimilarMovie(movieID: Int, language:String) =  movieRepository.getSimillerMovie(movieID,language)
 
 }

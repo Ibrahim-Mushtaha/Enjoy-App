@@ -85,7 +85,7 @@
             android:backgroundTint="@color/red"
             android:fontFamily="@font/cairo_regular"
             android:padding="12dp"
-            android:text="Save"
+            android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_16"

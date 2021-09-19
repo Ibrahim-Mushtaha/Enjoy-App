@@ -8,12 +8,16 @@ import android.view.WindowManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.BottomSheetLanguageBinding
+import com.ix.ibrahim7.rxjavaapplication.other.*
+import com.ix.ibrahim7.rxjavaapplication.util.PreferencesManager
 
-class LanguageDialog : BottomSheetDialogFragment(){
+class LanguageDialog(val onSaveLanguage: OnSaveLanguage) : BottomSheetDialogFragment(){
 
     private val mBinding by lazy {
         BottomSheetLanguageBinding.inflate(layoutInflater)
     }
+
+    private var lang = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +30,38 @@ class LanguageDialog : BottomSheetDialogFragment(){
         dialog!!.requestWindowFeature(STYLE_NO_TITLE)
         dialog!!.setCancelable(false)
 
+
+        with(mBinding){
+
+
+            if (PreferencesManager(requireContext()).sharedPreference.getString(LANG,"ar").toString() == "en"){
+                lang="en"
+                btnEnglish.isChecked = true
+               btnArabic.isChecked = false
+            }else{
+                lang="ar"
+                btnEnglish.isChecked = false
+                btnArabic.isChecked = true
+            }
+
+
+            btnEnglish.setOnClickListener {
+                PreferencesManager(requireContext()).editor.putString(LANG,"en").apply()
+            }
+
+            btnArabic.setOnClickListener {
+                PreferencesManager(requireContext()).editor.putString(LANG,"ar").apply()
+            }
+
+            btnConfirm.setOnClickListener {
+                if (PreferencesManager(requireContext()).sharedPreference.getString(LANG,"ar").toString() != lang){
+                    onSaveLanguage.onSaveLanguage()
+                }else{
+                    dismiss()
+                }
+            }
+
+        }
     }
 
     override fun onStart() {
@@ -34,7 +70,12 @@ class LanguageDialog : BottomSheetDialogFragment(){
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-
     }
+
+
+    interface OnSaveLanguage {
+        fun onSaveLanguage()
+    }
+
 
 }

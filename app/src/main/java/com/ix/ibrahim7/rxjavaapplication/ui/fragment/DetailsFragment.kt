@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -24,13 +23,12 @@ import com.ix.ibrahim7.rxjavaapplication.model.details.MovieDetails
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.model.review.Reviews
+import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.DetailsViewModel
-import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import kotlinx.android.synthetic.main.fragment_details.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
-import com.ix.ibrahim7.rxjavaapplication.util.Resource
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -84,10 +82,10 @@ class DetailsFragment : Fragment(),MovieAdapter.onClick,RecommendationsAdapter.o
         }
 
 
-        viewModel.getMovieDetails(getMovieID)
-        viewModel.getMovieReviews(getMovieID)
-        viewModel.getMovieRecommendations(getMovieID)
-        viewModel.getSimillerMovie(getMovieID)
+        viewModel.getMovieDetails(getMovieID,requireContext().getApiLang())
+        viewModel.getMovieReviews(getMovieID,requireContext().getApiLang())
+        viewModel.getMovieRecommendations(getMovieID,requireContext().getApiLang())
+        viewModel.getSimilarMovie(getMovieID,requireContext().getApiLang())
 
         mBinding.apply {
             genresList.apply {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">أفلامي</string>
+    <string name="english">إنجليزي</string>
+    <string name="arabic">عربي</string>
+    <string name="select_your_favorite_language">اختر لغتك المفضلة</string>
+    <string name="on">تشغيل</string>
+    <string name="off">إيقاف</string>
+    <string name="change_notificatoin_status">تغيير حالة الإشعارات</string>
+    <string name="save">حفظ</string>
+    <string name="overview">نظرة عامة</string>
+    <string name="literary_genres">الأنواع الأدبية</string>
+    <string name="similar_movies">أفلام مماثلة</string>
+    <string name="recommendations_movies">توصيات الافلام</string>
+    <string name="top_reviews">أفضل التقيمات</string>
+    <string name="trailer">الإعلان</string>
+    <string name="trailer_s">أخر الإعلانات</string>
+    <string name="trending">الأفلام الشائعة</string>
+    <string name="more">المزيد</string>
+    <string name="notification">الإشعارات</string>
+    <string name="language">اللغة</string>
+    <string name="share">مشاركة التطبيق</string>
+    <string name="developer">مطور التطبيق</string>
+    <string name="if_you_are_satisfied_with_the_application_please_nshare_feedback_your_friends">إذا كنت راضيًا عن التطبيق ، من فضلك \\ شارك ملاحظاتك مع أصدقائك.</string>
+    <string name="movie">أحدث الأفلام</string>
+    <string name="tv_show">البرامج التلفزيونية</string>
+    <string name="all_movie">جميع الأفلام</string>
+    <string name="popular">شائع</string>
+    <string name="now">يعرض حاليا</string>
+    <string name="soon">قادمة</string>
+    <string name="browse_the_news_of_movies_and_series_nlearn_new_stories">تصفح أخبار الأفلام والمسلسلات،و تعرف على قصص جديدة</string>
+</resources>

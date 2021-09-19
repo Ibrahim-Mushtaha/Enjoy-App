@@ -2,6 +2,7 @@ package com.ix.ibrahim7.rxjavaapplication.other
 
 import android.app.*
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.res.Resources
@@ -20,6 +21,7 @@ import com.ix.ibrahim7.rxjavaapplication.BuildConfig
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.ToolbarLayoutBinding
 import com.ix.ibrahim7.rxjavaapplication.ui.activity.MainActivity
+import com.ix.ibrahim7.rxjavaapplication.util.PreferencesManager
 import java.io.*
 import java.util.*
 
@@ -166,5 +168,28 @@ fun getNavOptions(): NavOptions {
         .build()
 }
 
+fun Activity.restartActivity(){
+    finish()
+    startActivity(
+        Intent(
+            this,
+            MainActivity::class.java
+        )
+    )
+    overridePendingTransition(
+        android.R.anim.fade_in,
+        android.R.anim.fade_out
+    )
+}
 
+fun Context.getApiLang():String{
+    when{
+        PreferencesManager(this).sharedPreference.getString(LANG,"ar").toString() == "en" -> {
+            return "en-US"
+        }
+        else -> {
+            return "ar"
+        }
+    }
+}
 

@@ -92,9 +92,9 @@ class HomeFragment : Fragment(),
 
         menuAdapter.data.apply {
             clear()
-            add(MenuItem(EnumConstant.POPULAR,"POPULAR",true))
-            add(MenuItem(EnumConstant.NEW,"NOW",false))
-            add(MenuItem(EnumConstant.COMING_SOON,"SOON",false))
+            add(MenuItem(EnumConstant.POPULAR,getString(R.string.popular),true))
+            add(MenuItem(EnumConstant.NEW,getString(R.string.now),false))
+            add(MenuItem(EnumConstant.COMING_SOON,getString(R.string.soon),false))
         }
 
         mBinding.listMenu.apply {

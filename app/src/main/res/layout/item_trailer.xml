@@ -52,6 +52,7 @@
                 android:layout_margin="@dimen/margin_8"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:textAlignment="viewStart"
                 android:text="Film Name"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/imgPoster"

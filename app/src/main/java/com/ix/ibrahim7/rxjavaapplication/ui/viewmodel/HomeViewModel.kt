@@ -3,6 +3,7 @@ package com.ix.ibrahim7.rxjavaapplication.ui.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
+import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -21,10 +22,10 @@ class HomeViewModel @Inject constructor(
     val dataTopRatedLiveData = movieRepository.dataTopRatedLiveData
     val dataTrendingLiveData = movieRepository.dataTrendingLiveData
 
-    fun getPopularMovie() =  movieRepository.getPopularMovie()
-    fun getUpComingMovie() =  movieRepository.getUpComingMovie()
-    fun getTopRated() =  movieRepository.getTopRated()
-    fun getTrendingMovie() =  movieRepository.getTrendingMovie()
+    fun getPopularMovie(language:String) =  movieRepository.getPopularMovie(language)
+    fun getUpComingMovie(language:String) =  movieRepository.getUpComingMovie(language)
+    fun getTopRated(language:String) =  movieRepository.getTopRated(language)
+    fun getTrendingMovie(language:String) =  movieRepository.getTrendingMovie(language)
 
 
 /*    fun getUpcoming() {
@@ -99,10 +100,10 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getPopularMovie()
-        getUpComingMovie()
-        getTopRated()
-        getTrendingMovie()
+        getPopularMovie(application.getApiLang())
+        getUpComingMovie(application.getApiLang())
+        getTopRated(application.getApiLang())
+        getTrendingMovie(application.getApiLang())
     }
 
 

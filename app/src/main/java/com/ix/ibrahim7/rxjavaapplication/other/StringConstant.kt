@@ -21,6 +21,7 @@ const val AR = "ar"
 
 
 const val INSTAGRAM_USERNAME = "ix.ibrahim7"
+const val PREFERENCES_NAME = "FileName"
 
 
 

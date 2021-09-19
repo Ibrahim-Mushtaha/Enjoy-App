@@ -62,7 +62,7 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
 
         loadingDialog =  LoadingDialog.getInstance()
 
-        requireActivity().setToolbarView(mBinding.toolbarLayout,"All Movie",false){
+        requireActivity().setToolbarView(mBinding.toolbarLayout,getString(R.string.all_movie),false){
             findNavController().navigateUp()
         }
 

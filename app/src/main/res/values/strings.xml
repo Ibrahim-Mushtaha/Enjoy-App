@@ -8,4 +8,26 @@
     <string name="on">on</string>
     <string name="off">off</string>
     <string name="change_notificatoin_status">Change notification status</string>
+    <string name="save">Save</string>
+    <string name="overview">Overview</string>
+    <string name="literary_genres">Literary genres</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="recommendations_movies">Recommendations Movies</string>
+    <string name="top_reviews">Top Reviews</string>
+    <string name="trailer">Trailer</string>
+    <string name="trailer_s">Trailers</string>
+    <string name="trending">Trending</string>
+    <string name="more">More</string>
+    <string name="notification">Notification</string>
+    <string name="language">Language</string>
+    <string name="share">Share</string>
+    <string name="developer">Developer</string>
+    <string name="if_you_are_satisfied_with_the_application_please_nshare_feedback_your_friends">if you are satisfied with the application , please\nshare feedback your friends.</string>
+    <string name="movie">Movie</string>
+    <string name="tv_show">Tv Show</string>
+    <string name="all_movie">All Movie</string>
+    <string name="popular">POPULAR</string>
+    <string name="now">NOW</string>
+    <string name="soon">SOON</string>
+    <string name="browse_the_news_of_movies_and_series_nlearn_new_stories">Browse the news of movies and series,\nlearn new stories</string>
 </resources>
