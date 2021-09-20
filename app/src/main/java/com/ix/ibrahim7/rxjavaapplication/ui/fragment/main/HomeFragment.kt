@@ -23,6 +23,8 @@ import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.EnumConstant
+import com.ix.ibrahim7.rxjavaapplication.other.ONE
+import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -36,7 +38,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
-    MovieAdapter.onClick ,
     MenuAdapter.onClick,
     GenericAdapter.OnListItemViewClickListener<Content>{
 
@@ -44,34 +45,48 @@ class HomeFragment : Fragment(),
         FragmentHomeBinding.inflate(layoutInflater)
     }
 
-    private var selectedItemPos = 0
-
     private val sliderAdapter by lazy {
         GenericAdapter(R.layout.item_image_slider,BR.Slider,
             object :GenericAdapter.OnListItemViewClickListener<Content>{
                 override fun onClickItem(itemViewModel: Content, type: Int) {
-
+                    when(type){
+                        1->{
+                            val bundle = Bundle().apply {
+                                putInt(Constant.MOVIE_ID,itemViewModel.id!!.toInt())
+                            }
+                            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment,bundle)
+                        }
+                    }
                 }
-
             }
         )
     }
 
-    private val pupular_adapter by lazy {
-        MovieAdapter(ArrayList(),1,this)
+    private val mainMovieAdapter by lazy {
+        GenericAdapter(R.layout.item_main_movie,BR.Movie,this)
     }
+
 
     private val trailerAdapter by lazy {
         GenericAdapter(R.layout.item_trailer,BR.MovieTrailer,this)
     }
 
-    private val popularAdapter by lazy {
-        MovieAdapter(ArrayList(),3,this)
-    }
 
-
-    private val upcomingAdapter by lazy {
-        MovieAdapter(ArrayList(),2,this)
+    private val trendingAdapter by lazy {
+            GenericAdapter(R.layout.item_full_movie_width,BR.FullMovieDetails,
+                object :GenericAdapter.OnListItemViewClickListener<Content>{
+                    override fun onClickItem(itemViewModel: Content, type: Int) {
+                        when(type){
+                            1->{
+                                val bundle = Bundle().apply {
+                                    putInt(Constant.MOVIE_ID,itemViewModel.id!!.toInt())
+                                }
+                                findNavController().navigate(R.id.action_homeFragment_to_detailsFragment,bundle)
+                            }
+                        }
+                    }
+                }
+            )
     }
 
     private val menuAdapter by lazy {
@@ -80,9 +95,9 @@ class HomeFragment : Fragment(),
 
     @Inject
     lateinit var viewModel: HomeViewModel
-
     val array = ArrayList<Content>()
     private var loadingDialog : LoadingDialog ?= null
+    private var selectedItemPos = 0
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -102,48 +117,34 @@ class HomeFragment : Fragment(),
             add(MenuItem(EnumConstant.COMING_SOON,getString(R.string.soon),false))
         }
 
-        mBinding.listMenu.apply {
-            adapter = menuAdapter
-        }
-
-
-        /*mBinding.btnClick.setOnClickListener {
-            viewModel.getPupular()
-        }
-
-        mBinding.btnClick2.setOnClickListener {
-            Log.e("eee allData",array.toString())
-        }*/
-
-        mBinding.btnMorePupuler.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt(TYPE,1)
+        with(mBinding){
+           listMenu.apply {
+                adapter = menuAdapter
             }
-            findNavController().navigate(R.id.action_homeFragment_to_allListFragment,bundle)
-        }
 
 
-       /* mBinding.btnMoreUpcoming.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt(TYPE,2)
+
+           btnMorePupuler.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putInt(TYPE,1)
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_allListFragment,bundle)
             }
-            findNavController().navigate(R.id.action_homeFragment_to_allListFragment,bundle)
-        }*/
 
-        mBinding.pupularList.apply {
-            adapter = pupular_adapter
-        }
+           pupularList.apply {
+                adapter = mainMovieAdapter
+            }
 
-        mBinding.rcTrailer.apply {
-            adapter = trailerAdapter
-        }
+            rcTrailer.apply {
+                adapter = trailerAdapter
+            }
 
-        mBinding.upcomingList.apply {
-            adapter = upcomingAdapter
+            upcomingList.apply {
+                adapter = trendingAdapter
+            }
         }
 
         subscribeToPopularObserver()
-     //   subscribeToUpComingObserver()
         subscribeToTrailerObserver()
         subscribeToTrendingObserver()
 
@@ -166,18 +167,15 @@ class HomeFragment : Fragment(),
 
         lifecycleScope.launchWhenStarted {
             viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
-                when (resultResponse.status) {
+                when(resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
                         loadingDialog!!.show(childFragmentManager,"")
                     }
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        pupular_adapter.data.clear()
-                        pupular_adapter.data.addAll(movie.contents!!)
-                        pupular_adapter.notifyDataSetChanged()
+                        mainMovieAdapter.submitList(movie.contents!!)
                         sliderAdapter.submitList(movie.contents)
-                      //  trailerAdapter.submitList(movie.contents!!)
                         try {
                             loadingDialog!!.dismiss()
                         }catch (e:Exception) {}
@@ -220,7 +218,7 @@ class HomeFragment : Fragment(),
         }
     }
 
-    /*private fun subscribeToUpComingObserver() {
+    private fun subscribeToUpComingObserver() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.dataUpcomingLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
@@ -230,9 +228,7 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        upcomingAdapter.data.clear()
-                        upcomingAdapter.data.addAll(movie.contents!!)
-                        upcomingAdapter.notifyDataSetChanged()
+                        mainMovieAdapter.submitList(movie.contents!!)
 
                     }
                     ResultRequest.Status.ERROR -> {
@@ -240,7 +236,27 @@ class HomeFragment : Fragment(),
                 }
             })
         }
-    }*/
+    }
+
+    private fun subscribeToNowPlayingObserver() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataNowPlayingLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        val movie = resultResponse.data!! as Movie
+                        mainMovieAdapter.submitList(movie.contents!!)
+
+                    }
+                    ResultRequest.Status.ERROR -> {
+                    }
+                }
+            })
+        }
+    }
 
     private fun subscribeToTrendingObserver() {
         lifecycleScope.launchWhenStarted {
@@ -251,10 +267,7 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        upcomingAdapter.data.clear()
-                        upcomingAdapter.data.addAll(movie.contents!!)
-                        upcomingAdapter.notifyDataSetChanged()
-
+                        trendingAdapter.submitList(movie.contents!!)
                     }
                     ResultRequest.Status.ERROR -> {
                     }
@@ -271,17 +284,6 @@ class HomeFragment : Fragment(),
         }
     }
 
-    override fun onClickItem(content: Content, position: Int, type: Int) {
-        when(type){
-            1->{
-                val bundle = Bundle().apply {
-                    putInt(Constant.MOVIE_ID,content.id!!.toInt())
-                }
-                findNavController().navigate(R.id.action_homeFragment_to_detailsFragment,bundle)
-            }
-        }
-    }
-
     override fun onClickListener(menuitem: MenuItem, position: Int) {
         menuAdapter.data[selectedItemPos].isSelected=false
         menuitem.isSelected=true
@@ -290,20 +292,30 @@ class HomeFragment : Fragment(),
 
         when(menuitem.code){
             EnumConstant.POPULAR ->{
-
+                viewModel.getPopularMovie(requireContext().getApiLang())
+                subscribeToPopularObserver()
             }
             EnumConstant.NEW ->{
-
+                viewModel.getNowPlaying(requireContext().getApiLang())
+                subscribeToNowPlayingObserver()
             }
             EnumConstant.COMING_SOON ->{
-
+                viewModel.getUpComingMovie(requireContext().getApiLang())
+                subscribeToUpComingObserver()
             }
         }
 
     }
 
     override fun onClickItem(itemViewModel: Content, type: Int) {
-
+        when(type){
+            ONE ->{
+                val bundle = Bundle().apply {
+                    putInt(Constant.MOVIE_ID,itemViewModel.id!!.toInt())
+                }
+                findNavController().navigate(R.id.action_homeFragment_to_detailsFragment,bundle)
+            }
+        }
     }
 
 

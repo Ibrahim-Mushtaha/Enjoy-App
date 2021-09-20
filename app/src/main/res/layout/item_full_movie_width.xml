@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="FullMovieDetails"
+            type="com.ix.ibrahim7.rxjavaapplication.model.movie.Content" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -35,6 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="center"
+                    loadImage="@{`https://image.tmdb.org/t/p/original` + FullMovieDetails.posterPath}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -55,8 +58,8 @@
                 android:maxLines="2"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="The Forgotten
-Hours"
+                android:text="@{FullMovieDetails.title}"
+                tools:text="The Forgotten Hours"
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -77,7 +80,8 @@ Hours"
                 android:maxLines="2"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="put forward (someone or something) with approval as being suitable for a particular purpose or role."
+                android:text="@{FullMovieDetails.overview}"
+                tools:text="put forward (someone or something) with approval as being suitable for a particular purpose or role."
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -98,7 +102,7 @@ Hours"
                 android:theme="@style/RatingBarTheme"
                 app:layout_constraintStart_toStartOf="@+id/tv_description"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description"
-                tools:rating="5" />
+                />
 
 
             <TextView
@@ -110,7 +114,7 @@ Hours"
                 android:fontFamily="@font/cairo_regular"
                 android:gravity="bottom"
                 android:maxLines="2"
-                android:text="5 Star"
+                tools:text="5 Star"
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_12"

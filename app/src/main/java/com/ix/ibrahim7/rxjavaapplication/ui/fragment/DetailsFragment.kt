@@ -36,7 +36,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
     MovieAdapter.onClick,
-    RecommendationsAdapter.onClick,
     GenericAdapter.OnListItemViewClickListener<Genre>{
 
     lateinit var mBinding: FragmentDetailsBinding
@@ -64,8 +63,21 @@ class DetailsFragment : Fragment(),
         MovieAdapter(ArrayList(),1,this)
     }
 
-    private val recommendations_adapter by lazy {
-        RecommendationsAdapter(ArrayList(),this)
+    private val recommendationsAdapter by lazy {
+        GenericAdapter(R.layout.item_main_movie,BR.Movie,
+            object :GenericAdapter.OnListItemViewClickListener<Content>{
+                override fun onClickItem(itemViewModel: Content, type: Int) {
+                    when(type){
+                        1->{
+                            val bundle = Bundle().apply {
+                                putInt(MOVIE_ID,itemViewModel.id!!.toInt())
+                            }
+                            findNavController().navigate(R.id.action_detailsFragment_self,bundle)
+                        }
+                    }
+                }
+            }
+        )
     }
 
     private val getMovieID by lazy {
@@ -106,7 +118,7 @@ class DetailsFragment : Fragment(),
                 adapter=movie_adapter
             }
             recommendations_list.apply {
-                adapter=recommendations_adapter
+                adapter=recommendationsAdapter
             }
             reviewslist.apply {
                 adapter=reviewsAdapter
@@ -213,9 +225,7 @@ class DetailsFragment : Fragment(),
                         (resultResponse.data as Movie).let { movie ->
                             mBinding.apply {
                                     if (movie.contents!!.isNotEmpty()) {
-                                        recommendations_adapter.data.clear()
-                                        recommendations_adapter.data.addAll(movie.contents!!)
-                                        recommendations_adapter.notifyDataSetChanged()
+                                        recommendationsAdapter.submitList(movie.contents)
                                     }
                                 }
                         }

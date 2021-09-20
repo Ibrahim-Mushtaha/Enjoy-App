@@ -18,6 +18,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
 
     val dataPopularLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataUpcomingLiveData = MutableLiveData<ResultRequest<Any>>()
+    val dataNowPlayingLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataTopRatedLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataTrendingLiveData = MutableLiveData<ResultRequest<Any>>()
 
@@ -107,6 +108,49 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 } catch (t: Throwable) {
                     Log.e("upComingMovieErrorThrowable", t.message.toString())
                     dataUpcomingLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun getNowPlaying(language:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataNowPlayingLiveData.postValue(ResultRequest.loading("loading"))
+            val response = movieApi.getNowPlaying(page,language)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            dataNowPlayingLiveData.postValue(ResultRequest.success(it))
+                            Log.e("nowPlayingMovieSuccess", it.toString())
+                        }
+
+                    } else {
+                        Log.e("nowPlayingMovieErrorRequest", response.errorBody().toString())
+                        dataNowPlayingLiveData.postValue(
+                            ResultRequest.error(
+                                "Ooops: ${response.errorBody()}",
+                                response
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    Log.e("nowPlayingMovieErrorHttp", e.message().toString())
+                    dataNowPlayingLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    Log.e("nowPlayingMovieErrorThrowable", t.message.toString())
+                    dataNowPlayingLiveData.postValue(
                         ResultRequest.error(
                             "Ooops: ${t.message}",
                             t

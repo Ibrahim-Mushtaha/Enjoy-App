@@ -17,11 +17,13 @@ class HomeViewModel @Inject constructor(
 
     val dataPopularLiveData = movieRepository.dataPopularLiveData
     val dataUpcomingLiveData = movieRepository.dataUpcomingLiveData
+    val dataNowPlayingLiveData = movieRepository.dataNowPlayingLiveData
     val dataTopRatedLiveData = movieRepository.dataTopRatedLiveData
     val dataTrendingLiveData = movieRepository.dataTrendingLiveData
 
     fun getPopularMovie(language:String) =  movieRepository.getPopularMovie(language)
     fun getUpComingMovie(language:String) =  movieRepository.getUpComingMovie(language)
+    fun getNowPlaying(language:String) =  movieRepository.getNowPlaying(language)
     fun getTopRated(language:String) =  movieRepository.getTopRated(language)
     fun getTrendingMovie(language:String) =  movieRepository.getTrendingMovie(language)
 
@@ -99,7 +101,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         getPopularMovie(application.getApiLang())
-        getUpComingMovie(application.getApiLang())
         getTopRated(application.getApiLang())
         getTrendingMovie(application.getApiLang())
     }
