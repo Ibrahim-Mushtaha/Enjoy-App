@@ -192,12 +192,10 @@ class HomeFragment : Fragment(),
     }
 
     private fun subscribeToTrailerObserver() {
-
         lifecycleScope.launchWhenStarted {
             viewModel.dataTopRatedLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
                 when (resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
-                        //loadingDialog!!.show(childFragmentManager,"")
                     }
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())

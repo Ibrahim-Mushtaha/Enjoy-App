@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
+import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentAllListBinding
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
@@ -29,14 +31,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AllListFragment : Fragment(),MovieAdapter.onClick {
+class AllListFragment : Fragment(),GenericAdapter.OnListItemViewClickListener<Content>{
 
     private val mBinding by lazy {
         FragmentAllListBinding.inflate(layoutInflater)
     }
 
     private val listAdapter by lazy {
-        MovieAdapter(ArrayList(),2,this)
+        GenericAdapter(R.layout.item_full_movie_width, BR.FullMovieDetails, this)
     }
 
     @Inject
@@ -98,9 +100,7 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
                         val movie = resultResponse.data!! as Movie
                         isLoading = false
                         onScrollListener.totalCount = movie.totalResults!!
-                        listAdapter.data.clear()
-                        listAdapter.data.addAll(movie.contents!!)
-                        listAdapter.notifyDataSetChanged()
+                        listAdapter.submitList(movie.contents!!)
                         Log.e("eee dataUpcoming", movie.toString())
                         try {
                             loadingDialog!!.dismiss()
@@ -129,9 +129,7 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
                         val movie = resultResponse.data!! as Movie
                         isLoading = false
                         onScrollListener.totalCount = movie.totalResults!!
-                        listAdapter.data.clear()
-                        listAdapter.data.addAll(movie.contents!!)
-                        listAdapter.notifyDataSetChanged()
+                        listAdapter.submitList(movie.contents!!)
                         Log.e("eee dataUpcoming", movie.toString())
                         try {
                             loadingDialog!!.dismiss()
@@ -153,17 +151,16 @@ class AllListFragment : Fragment(),MovieAdapter.onClick {
         isScrolling = false
     }
 
-    override fun onClickItem(content: Content, position: Int, type: Int) {
+    override fun onClickItem(itemViewModel: Content, type: Int) {
         when(type){
             1->{
                 val bundle = Bundle().apply {
-                    putInt(MOVIE_ID,content.id!!.toInt())
+                    putInt(MOVIE_ID,itemViewModel.id!!.toInt())
                 }
                 findNavController().navigate(R.id.action_allListFragment_to_detailsFragment,bundle)
             }
         }
     }
-
 
 
 }
