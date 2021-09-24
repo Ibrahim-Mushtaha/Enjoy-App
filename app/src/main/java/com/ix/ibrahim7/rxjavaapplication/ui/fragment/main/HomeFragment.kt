@@ -17,9 +17,8 @@ import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
 import com.ix.ibrahim7.rxjavaapplication.adapter.MenuAdapter
-import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
-import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
+import com.ix.ibrahim7.rxjavaapplication.model.menu.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.EnumConstant

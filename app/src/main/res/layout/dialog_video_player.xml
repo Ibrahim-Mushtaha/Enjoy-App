@@ -17,13 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:autoPlay="true"
+            app:showVideoCurrentTime="true"
+            app:showVideoDuration="true"
+            app:showYouTubeButton="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:showFullScreenButton="false"
-            app:videoId="S0Q4gqBUs7c" />
+            app:videoId="V28PXZ60MGY" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -23,6 +23,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     val dataTrendingLiveData = MutableLiveData<ResultRequest<Any>>()
 
     val dataDetailsLiveData = MutableLiveData<ResultRequest<Any>>()
+    val dataMovieVideoLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataReviewsLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataRecommendationLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataSimilarLiveData = MutableLiveData<ResultRequest<Any>>()
@@ -65,6 +66,49 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 } catch (t: Throwable) {
                     Log.e("popularMovieErrorThrowable", t.message.toString())
                     dataPopularLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun getMovieVideo(movieID:String,language:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataMovieVideoLiveData.postValue(ResultRequest.loading("loading"))
+            val response = movieApi.getMovieVideo(movieID,language)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            dataMovieVideoLiveData.postValue(ResultRequest.success(it))
+                            Log.e("movieVideoSuccess", it.toString())
+                        }
+
+                    } else {
+                        Log.e("movieVideoErrorRequest", response.errorBody().toString())
+                        dataMovieVideoLiveData.postValue(
+                            ResultRequest.error(
+                                "Ooops: ${response.errorBody()}",
+                                response
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    Log.e("movieVideoErrorHttp", e.message().toString())
+                    dataMovieVideoLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    Log.e("movieVideoErrorThrowable", t.message.toString())
+                    dataMovieVideoLiveData.postValue(
                         ResultRequest.error(
                             "Ooops: ${t.message}",
                             t

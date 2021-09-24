@@ -22,6 +22,7 @@ import com.ix.ibrahim7.rxjavaapplication.model.details.MovieDetails
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.model.review.Reviews
+import com.ix.ibrahim7.rxjavaapplication.model.video.MovieVideo
 import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.VideoPlayerDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.DetailsViewModel
@@ -30,6 +31,9 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
 import javax.inject.Inject
@@ -127,7 +131,8 @@ class DetailsFragment : Fragment(),
         }
 
         mBinding.btnTrailer.setOnClickListener {
-            VideoPlayerDialog().show(childFragmentManager,"")
+            viewModel.getMovieVideo(getMovieID.toString(),requireContext().getApiLang())
+            subscribeToMovieVideoObserver()
         }
 
 
@@ -138,8 +143,28 @@ class DetailsFragment : Fragment(),
         subscribeToMovieSimilarObserver()
 
 
+    }
 
+    private fun subscribeToMovieVideoObserver() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataMovieVideoLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
 
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        (resultResponse.data as MovieVideo).let { video ->
+                            VideoPlayerDialog(video.results!![0].toString()).show(childFragmentManager,"")
+                        }
+
+                    }
+                    ResultRequest.Status.ERROR -> {
+                        Log.e("eee error movie video",resultResponse.message.toString())
+                    }
+                }
+            })
+        }
     }
 
     private fun subscribeToMovieDetailsObserver() {

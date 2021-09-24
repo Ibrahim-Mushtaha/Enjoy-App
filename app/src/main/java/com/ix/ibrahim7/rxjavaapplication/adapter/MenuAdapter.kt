@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.databinding.ItemMenuBinding
-import com.ix.ibrahim7.rxjavaapplication.model.MenuItem
+import com.ix.ibrahim7.rxjavaapplication.model.menu.MenuItem
 import kotlinx.android.synthetic.main.item_menu.view.*
 import java.util.ArrayList
 
@@ -61,7 +61,7 @@ class MenuAdapter(var data: ArrayList<MenuItem>, val itemclick: onClick) :
     }
 
     interface onClick {
-        fun onClickListener(menuitem: MenuItem,position: Int)
+        fun onClickListener(menuitem: MenuItem, position: Int)
     }
 
 }

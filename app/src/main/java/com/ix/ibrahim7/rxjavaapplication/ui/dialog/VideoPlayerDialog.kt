@@ -1,6 +1,7 @@
 package com.ix.ibrahim7.rxjavaapplication.ui.dialog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,13 @@ import androidx.fragment.app.DialogFragment
 import com.ix.ibrahim7.rxjavaapplication.databinding.DialogVideoPlayerBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class VideoPlayerDialog(val movieID:String?= null) : DialogFragment() {
+class VideoPlayerDialog(val movieID:String) : DialogFragment() {
 
     private val mBinding by lazy {
         DialogVideoPlayerBinding.inflate(layoutInflater)
@@ -31,19 +34,16 @@ class VideoPlayerDialog(val movieID:String?= null) : DialogFragment() {
         isCancelable = true
 
         with(mBinding){
+
+            //val youTubePlayerView2 = YouTubePlayerView(requireContext())
+           // mBinding.youtubePlayerView.addView(youTubePlayerView2)
             youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    val videoId = movieID ?: "5a80bbea0e0a262aa6027273"
+                    val videoId = movieID
                     youTubePlayer.loadVideo(videoId, 0f)
                 }
             })
-
-
         }
-
-    }
-
-    private fun subscribeToObserver() {
 
     }
 

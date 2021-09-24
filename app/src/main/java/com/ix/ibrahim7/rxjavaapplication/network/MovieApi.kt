@@ -3,6 +3,7 @@ package com.ix.ibrahim7.rxjavaapplication.network
 import com.ix.ibrahim7.rxjavaapplication.model.details.MovieDetails
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.model.review.Reviews
+import com.ix.ibrahim7.rxjavaapplication.model.video.MovieVideo
 import retrofit2.http.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.API_KEY
 import retrofit2.Response
@@ -135,6 +136,17 @@ interface MovieApi {
         @Query("api_key")
         apiKey: String = API_KEY
     ): Response<Movie>
+
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideo(
+        @Path("movie_id")
+        movieID: String,
+        @Query("language")
+        language: String = "en-US",
+        @Query("api_key")
+        apiKey: String = API_KEY
+    ): Response<MovieVideo>
 
 
 }

@@ -1,4 +1,4 @@
-package com.ix.ibrahim7.rxjavaapplication.model
+package com.ix.ibrahim7.rxjavaapplication.model.menu
 
 import com.ix.ibrahim7.rxjavaapplication.other.EnumConstant
 

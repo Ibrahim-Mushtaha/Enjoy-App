@@ -5,7 +5,7 @@
     <data>
         <variable
             name="Item"
-            type="com.ix.ibrahim7.rxjavaapplication.model.MenuItem" />
+            type="com.ix.ibrahim7.rxjavaapplication.model.menu.MenuItem" />
     </data>
 
     <LinearLayout
