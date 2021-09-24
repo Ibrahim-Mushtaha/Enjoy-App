@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.ix.ibrahim7.rxjavaapplication.databinding.DialogVideoPlayerBinding
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class VideoPlayerDialog : DialogFragment() {
+class VideoPlayerDialog(val movieID:String?= null) : DialogFragment() {
 
     private val mBinding by lazy {
         DialogVideoPlayerBinding.inflate(layoutInflater)
@@ -27,10 +30,16 @@ class VideoPlayerDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         isCancelable = true
 
-        mBinding.btnCancel.setOnClickListener {
-            dismiss()
-        }
+        with(mBinding){
+            youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId = movieID ?: "5a80bbea0e0a262aa6027273"
+                    youTubePlayer.loadVideo(videoId, 0f)
+                }
+            })
 
+
+        }
 
     }
 

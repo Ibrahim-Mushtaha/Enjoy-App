@@ -23,6 +23,7 @@ import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.model.review.Reviews
 import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
+import com.ix.ibrahim7.rxjavaapplication.ui.dialog.VideoPlayerDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.DetailsViewModel
 import kotlinx.android.synthetic.main.fragment_details.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
@@ -123,6 +124,10 @@ class DetailsFragment : Fragment(),
             reviewslist.apply {
                 adapter=reviewsAdapter
             }
+        }
+
+        mBinding.btnTrailer.setOnClickListener {
+            VideoPlayerDialog().show(childFragmentManager,"")
         }
 
 
