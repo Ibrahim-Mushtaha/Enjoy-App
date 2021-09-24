@@ -119,5 +119,8 @@ dependencies {
 
     //loading progress
     implementation 'com.akexorcist:round-corner-progress-bar:2.1.1'
+
+    //youtube player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.23'
     
 }
