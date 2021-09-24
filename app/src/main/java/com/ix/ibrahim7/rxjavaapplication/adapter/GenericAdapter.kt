@@ -8,7 +8,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ix.ibrahim7.rxjavaapplication.R
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
+import kotlinx.android.synthetic.main.item_full_movie_width.view.*
+import kotlinx.android.synthetic.main.item_main_movie.view.*
 
 class GenericAdapter<T>(
     @LayoutRes val layoutId: Int,
@@ -50,6 +54,22 @@ class GenericAdapter<T>(
         holder.itemView.apply {
         Constant.setAnimation(this, position, Constant.on_attach, Constant.DURATION)
 
+            when(itemViewModel){
+                is Content ->{
+                   when(layoutId){
+                       R.layout.item_main_movie->{
+                           val movieRate = (itemViewModel.voteAverage!! / 2).toFloat()
+                           tvRating.text = movieRate.toString()
+                           movieRating.rating = movieRate
+                       }
+                       R.layout.item_full_movie_width->{
+                           val movieRate = (itemViewModel.voteAverage!! / 2).toFloat()
+                           tvRatingUpComing.text = movieRate.toString()
+                           movieRatingUpComing.rating = movieRate
+                       }
+                   }
+                }
+            }
             setOnClickListener {
                 itemclick.onClickItem(itemViewModel,1)
             }

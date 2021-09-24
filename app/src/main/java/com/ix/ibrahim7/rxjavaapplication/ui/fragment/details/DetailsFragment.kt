@@ -1,4 +1,4 @@
-package com.ix.ibrahim7.rxjavaapplication.ui.fragment
+package com.ix.ibrahim7.rxjavaapplication.ui.fragment.details
 
 import android.os.Bundle
 import android.util.Log
@@ -31,19 +31,17 @@ import com.ix.ibrahim7.rxjavaapplication.util.Constant.IMAGE_URL
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setImage
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(),
-    MovieAdapter.onClick,
     GenericAdapter.OnListItemViewClickListener<Genre>{
 
-    lateinit var mBinding: FragmentDetailsBinding
+    private val mBinding by lazy {
+        FragmentDetailsBinding.inflate(layoutInflater)
+    }
 
     @Inject
     lateinit var viewModel: DetailsViewModel
@@ -64,8 +62,24 @@ class DetailsFragment : Fragment(),
         })
     }
 
-    private val movie_adapter by lazy {
-        MovieAdapter(ArrayList(),1,this)
+    private val similarMovieAdapter by lazy {
+        GenericAdapter(R.layout.item_main_movie,BR.Movie,object :  GenericAdapter.OnListItemViewClickListener<Content>{
+            override fun onClickItem(itemViewModel: Content, type: Int) {
+                when(type){
+                    1->{
+                        when(type){
+                            1->{
+                                val bundle = Bundle().apply {
+                                    putInt(MOVIE_ID,itemViewModel.id!!.toInt())
+                                }
+                                findNavController().navigate(R.id.action_detailsFragment_self,bundle)
+                            }
+                        }
+                    }
+                }
+            }
+
+        })
     }
 
     private val recommendationsAdapter by lazy {
@@ -93,57 +107,53 @@ class DetailsFragment : Fragment(),
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        mBinding = FragmentDetailsBinding.inflate(inflater, container, false).apply {
-            executePendingBindings()
-        }
-        return mBinding.root
-    }
+    ) = mBinding.root
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mBinding.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+        with(mBinding) {
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+
+            with(viewModel) {
+                getMovieDetails(getMovieID, requireContext().getApiLang())
+                getMovieReviews(getMovieID, requireContext().getApiLang())
+                getMovieRecommendations(getMovieID, requireContext().getApiLang())
+                getSimilarMovie(getMovieID, requireContext().getApiLang())
+            }
+
+                genresList.apply {
+                    adapter = genresAdapter
+                }
+
+                similarList.apply {
+                    adapter = similarMovieAdapter
+                }
+                recommendations_list.apply {
+                    adapter = recommendationsAdapter
+                }
+                reviewslist.apply {
+                    adapter = reviewsAdapter
+                }
+
+            btnTrailer.setOnClickListener {
+                viewModel.getMovieVideo(getMovieID.toString(), requireContext().getApiLang())
+                subscribeToMovieVideoObserver()
+            }
+
+
+
+            subscribeToMovieDetailsObserver()
+            subscribeToMovieReviewsObserver()
+            subscribeToMovieRecommendationObserver()
+            subscribeToMovieSimilarObserver()
         }
-
-
-        viewModel.getMovieDetails(getMovieID,requireContext().getApiLang())
-        viewModel.getMovieReviews(getMovieID,requireContext().getApiLang())
-        viewModel.getMovieRecommendations(getMovieID,requireContext().getApiLang())
-        viewModel.getSimilarMovie(getMovieID,requireContext().getApiLang())
-
-        mBinding.apply {
-            genresList.apply {
-                adapter=genresAdapter
-            }
-
-            similarList.apply {
-                adapter=movie_adapter
-            }
-            recommendations_list.apply {
-                adapter=recommendationsAdapter
-            }
-            reviewslist.apply {
-                adapter=reviewsAdapter
-            }
-        }
-
-        mBinding.btnTrailer.setOnClickListener {
-            viewModel.getMovieVideo(getMovieID.toString(),requireContext().getApiLang())
-            subscribeToMovieVideoObserver()
-        }
-
-
-
-        subscribeToMovieDetailsObserver()
-        subscribeToMovieReviewsObserver()
-        subscribeToMovieRecommendationObserver()
-        subscribeToMovieSimilarObserver()
-
 
     }
+
 
     private fun subscribeToMovieVideoObserver() {
         lifecycleScope.launchWhenStarted {
@@ -177,7 +187,7 @@ class DetailsFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         (resultResponse.data as MovieDetails).let { movie ->
-                            mBinding.apply {
+                            with(mBinding){
                                 tvImage.startAnimation(
                                     AnimationUtils.loadAnimation(requireContext(),
                                         R.anim.slide_up
@@ -281,9 +291,7 @@ class DetailsFragment : Fragment(),
                         (resultResponse.data as Movie).let { movie ->
                             mBinding.apply {
                                     if (movie.contents!!.isNotEmpty()) {
-                                        movie_adapter.data.clear()
-                                        movie_adapter.data.addAll(movie.contents!!)
-                                        movie_adapter.notifyDataSetChanged()
+                                        similarMovieAdapter.submitList(movie.contents)
                                     }
                                 }
                         }
@@ -296,22 +304,6 @@ class DetailsFragment : Fragment(),
             })
         }
     }
-
-    override fun onClickItem(content: Content, position: Int, type: Int) {
-        when(type){
-            1->{
-                when(type){
-                    1->{
-                        val bundle = Bundle().apply {
-                            putInt(MOVIE_ID,content.id!!.toInt())
-                        }
-                        findNavController().navigate(R.id.action_detailsFragment_self,bundle)
-                    }
-                }
-            }
-        }
-    }
-
 
     override fun onClickItem(itemViewModel: Genre, type: Int) {
 

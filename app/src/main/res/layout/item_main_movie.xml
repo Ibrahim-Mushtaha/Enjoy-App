@@ -52,7 +52,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/cairo_regular"
             android:gravity="start"
-            android:maxLines="2"
+            android:maxLines="1"
             android:minLines="1"
             android:textAlignment="viewStart"
             tools:text="The Forgotten Hours"

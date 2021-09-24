@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.BR
@@ -20,7 +19,6 @@ import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
-import com.ix.ibrahim7.rxjavaapplication.util.Resource
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

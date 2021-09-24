@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.DetailsFragment"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/allListFragment"
-        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.AllListFragment"
+        android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.other.AllListFragment"
         android:label="fragment_all_list"
         tools:layout="@layout/fragment_all_list" >
         <action

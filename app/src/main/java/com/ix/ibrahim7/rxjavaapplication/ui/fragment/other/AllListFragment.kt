@@ -1,4 +1,4 @@
-package com.ix.ibrahim7.rxjavaapplication.ui.fragment
+package com.ix.ibrahim7.rxjavaapplication.ui.fragment.other
 
 import android.os.Bundle
 import android.util.Log
@@ -8,24 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
-import com.ix.ibrahim7.rxjavaapplication.adapter.MovieAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentAllListBinding
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
-import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.MOVIE_ID
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.TYPE
 import com.ix.ibrahim7.rxjavaapplication.util.OnScrollListener
-import com.ix.ibrahim7.rxjavaapplication.util.Resource
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
