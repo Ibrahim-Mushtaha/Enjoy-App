@@ -24,9 +24,9 @@ object RetrofitModule {
             .addConverterFactory(GsonConverterFactory.create())
             .apply {
                 val builder = OkHttpClient.Builder()
-                builder.connectTimeout(5, TimeUnit.MINUTES) // connect timeout
-                    .writeTimeout(5, TimeUnit.MINUTES) // write timeout
-                    .readTimeout(5, TimeUnit.MINUTES) // read timeout
+                builder.connectTimeout(5, TimeUnit.MINUTES)
+                    .writeTimeout(5, TimeUnit.MINUTES)
+                    .readTimeout(5, TimeUnit.MINUTES)
                 this.client(builder.build())
             }
             .build()

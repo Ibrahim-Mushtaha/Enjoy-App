@@ -80,5 +80,13 @@
     <fragment
         android:id="@+id/tvShowFragment"
         android:name="com.ix.ibrahim7.rxjavaapplication.ui.fragment.main.TvShowFragment"
-        android:label="TvShowFragment" />
+        android:label="TvShowFragment" >
+        <action
+            android:id="@+id/action_tvShowFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
 </navigation>

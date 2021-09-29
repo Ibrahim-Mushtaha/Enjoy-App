@@ -38,7 +38,7 @@ interface MovieApi {
             apiKey: String = API_KEY
     ): Response<Movie>
 
-   @GET("/genre/tv/list")
+   @GET("discover/tv")
     suspend fun getTvShowList(
             @Query("language")
             language: String = "en-US",

@@ -22,6 +22,8 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     val dataTopRatedLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataTrendingLiveData = MutableLiveData<ResultRequest<Any>>()
 
+    val dataTvShowLiveData = MutableLiveData<ResultRequest<Any>>()
+
     val dataDetailsLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataMovieVideoLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataReviewsLiveData = MutableLiveData<ResultRequest<Any>>()
@@ -455,6 +457,50 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 } catch (t: Throwable) {
                     Log.e("simillerMovieErrorThrowable", t.message.toString())
                     dataSimilarLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+
+    fun getTvShowList(language:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            dataTvShowLiveData.postValue(ResultRequest.loading("loading"))
+            val response = movieApi.getTvShowList(language = language)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            dataTvShowLiveData.postValue(ResultRequest.success(it))
+                            Log.e("tvShowSuccess", it.toString())
+                        }
+
+                    } else {
+                        Log.e("tvShowErrorRequest", response.errorBody().toString())
+                        dataTvShowLiveData.postValue(
+                            ResultRequest.error(
+                                "Ooops: ${response.errorBody()}",
+                                response
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    Log.e("tvShowErrorHttp", e.message().toString())
+                    dataTvShowLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    Log.e("tvShowErrorThrowable", t.message.toString())
+                    dataTvShowLiveData.postValue(
                         ResultRequest.error(
                             "Ooops: ${t.message}",
                             t
