@@ -9,9 +9,9 @@
         android:title="Movies"
         android:icon="@drawable/ic_movie"/>
 
-    <item android:id="@+id/tvShowFragment"
+   <!-- <item android:id="@+id/tvShowFragment"
         android:title="Tv Shows"
-        android:icon="@drawable/ic_tv"/>
+        android:icon="@drawable/ic_tv"/>-->
 
 
     <item android:id="@+id/moreFragment"
