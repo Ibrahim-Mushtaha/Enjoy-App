@@ -173,8 +173,10 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        mainMovieAdapter.submitList(movie.contents!!)
-                        sliderAdapter.submitList(movie.contents)
+                        mainMovieAdapter.data = movie.contents!!
+                        mainMovieAdapter.notifyDataSetChanged()
+                        sliderAdapter.data = movie.contents!!
+                        sliderAdapter.notifyDataSetChanged()
                         try {
                             loadingDialog!!.dismiss()
                         }catch (e:Exception) {}
@@ -199,7 +201,8 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        trailerAdapter.submitList(movie.contents!!)
+                        trailerAdapter.data = movie.contents!!
+                        trailerAdapter.notifyDataSetChanged()
                         try {
                             loadingDialog!!.dismiss()
                         }catch (e:Exception) {}
@@ -225,8 +228,8 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        mainMovieAdapter.submitList(movie.contents!!)
-
+                        mainMovieAdapter.data = movie.contents!!
+                        mainMovieAdapter.notifyDataSetChanged()
                     }
                     ResultRequest.Status.ERROR -> {
                     }
@@ -245,7 +248,8 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        mainMovieAdapter.submitList(movie.contents!!)
+                        mainMovieAdapter.data = movie.contents!!
+                        mainMovieAdapter.notifyDataSetChanged()
 
                     }
                     ResultRequest.Status.ERROR -> {
@@ -264,7 +268,8 @@ class HomeFragment : Fragment(),
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        trendingAdapter.submitList(movie.contents!!)
+                        trendingAdapter.data = movie.contents!!
+                        trendingAdapter.notifyDataSetChanged()
                     }
                     ResultRequest.Status.ERROR -> {
                     }

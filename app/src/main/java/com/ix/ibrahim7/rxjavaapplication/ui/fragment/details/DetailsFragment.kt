@@ -198,7 +198,8 @@ class DetailsFragment : Fragment(),
                                     tvImage,
                                     R.color.purple
                                 )
-                                genresAdapter.submitList(movie.genres!!)
+                                genresAdapter.data = movie.genres!!
+                                genresAdapter.notifyDataSetChanged()
                                 tvMovieName.text = movie.title
                                 movieRating.rating = (movie.voteAverage!! / 2).toFloat()
                                 tvRating.text = (movie.voteAverage / 2).toFloat().toString()
@@ -239,7 +240,8 @@ class DetailsFragment : Fragment(),
                         (resultResponse.data as Reviews).let { review ->
                             mBinding.apply {
                                     if (review.contents!!.isNotEmpty()) {
-                                        reviewsAdapter.submitList(review.contents)
+                                        reviewsAdapter.data = review.contents
+                                        reviewsAdapter.notifyDataSetChanged()
                                     }
                                 }
                         }
@@ -265,7 +267,8 @@ class DetailsFragment : Fragment(),
                         (resultResponse.data as Movie).let { movie ->
                             mBinding.apply {
                                     if (movie.contents!!.isNotEmpty()) {
-                                        recommendationsAdapter.submitList(movie.contents)
+                                        recommendationsAdapter.data = movie.contents!!
+                                        recommendationsAdapter.notifyDataSetChanged()
                                     }
                                 }
                         }
@@ -291,7 +294,8 @@ class DetailsFragment : Fragment(),
                         (resultResponse.data as Movie).let { movie ->
                             mBinding.apply {
                                     if (movie.contents!!.isNotEmpty()) {
-                                        similarMovieAdapter.submitList(movie.contents)
+                                        similarMovieAdapter.data = movie.contents!!
+                                        similarMovieAdapter.notifyDataSetChanged()
                                     }
                                 }
                         }

@@ -23,7 +23,7 @@ class OnScrollListener(
 
         val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
         val isNotAtBeginning = firstVisibleItemPosition >= 0
-        val isTotalMoreThenVisible = totalItemCount >=40
+        val isTotalMoreThenVisible = totalItemCount >=20
 
         val shouldPaginate = isNotLoadingAndNotLastPage
                 && isAtLastItem

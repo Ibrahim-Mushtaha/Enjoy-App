@@ -73,7 +73,8 @@ class TvShowFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Co
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        tvShowAdapter.submitList(movie.contents!!)
+                        tvShowAdapter.data = movie.contents!!
+                        tvShowAdapter.notifyDataSetChanged()
                         Log.e("eee dataUpcoming", movie.toString())
                         try {
                             loadingDialog!!.dismiss()

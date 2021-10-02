@@ -15,10 +15,12 @@ import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
 import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentMovieBinding
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
+import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
+import com.ix.ibrahim7.rxjavaapplication.util.OnScrollListener
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -36,8 +38,11 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
 
     @Inject
     lateinit var viewModel: HomeViewModel
-
     private var loadingDialog : LoadingDialog ?= null
+    private var isFirstLaunch = true
+    private var isLoading = false
+    private var isLastPage = false
+    private var isScrolling = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +61,7 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
 
             rcMovie.apply {
                 adapter = movieAdapter
+                addOnScrollListener(onScrollListener)
             }
 
             subscribeToPopularObserver()
@@ -72,31 +78,50 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
             viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
                 when(resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
-                        loadingDialog!!.show(childFragmentManager,"")
+                        if (isFirstLaunch) {
+                            loadingDialog!!.show(childFragmentManager, "")
+                            isFirstLaunch = false
+                        }else {
+                            mBinding.progressBar.visibility = View.VISIBLE
+                        }
                     }
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        movieAdapter.submitList(movie.contents!!)
-                        try {
-                            loadingDialog!!.dismiss()
-                        }catch (e:Exception) {}
+                        onScrollListener.totalCount = movie.totalPages!!
+                        movieAdapter.data = movie.contents!!
+                        movieAdapter.notifyDataSetChanged()
+                        if (!isFirstLaunch) {
+                            try {
+                                loadingDialog!!.dismiss()
+                            }catch (e:Exception) {}
+                        }
+                        else {
+                            mBinding.progressBar.visibility = View.GONE
+                        }
                         Log.e("eee dataUpcoming", movie.toString())
-                        try {
-                            loadingDialog!!.dismiss()
-                        }catch (e:Exception) {}
                     }
                     ResultRequest.Status.ERROR -> {
-                        Log.e("eeee Error",resultResponse.data.toString())
-                        try {
-                            loadingDialog!!.dismiss()
-                        }catch (e:Exception) {}
+                        if (!isFirstLaunch) {
+                            try {
+                                loadingDialog!!.dismiss()
+                            }catch (e:Exception) {}
+                        }
+                        else{
+                            mBinding.progressBar.visibility = View.GONE
+                        }
                     }
                 }
             })
         }
     }
 
+
+    private val onScrollListener =
+        OnScrollListener(isLoading, isLastPage, 0) {
+            viewModel.getPopularMovie(requireContext().getApiLang())
+            isScrolling = false
+        }
 
 
     override fun onClickItem(itemViewModel: Content, type: Int) {

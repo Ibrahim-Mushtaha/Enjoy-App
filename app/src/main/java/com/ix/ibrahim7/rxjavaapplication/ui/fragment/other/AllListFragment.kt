@@ -95,8 +95,9 @@ class AllListFragment : Fragment(),GenericAdapter.OnListItemViewClickListener<Co
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
                         isLoading = false
-                        onScrollListener.totalCount = movie.totalResults!!
-                        listAdapter.submitList(movie.contents!!)
+                        onScrollListener.totalCount = movie.totalPages!!
+                        listAdapter.data = movie.contents!!
+                        listAdapter.notifyDataSetChanged()
                         Log.e("eee dataUpcoming", movie.toString())
                         try {
                             loadingDialog!!.dismiss()
@@ -124,8 +125,9 @@ class AllListFragment : Fragment(),GenericAdapter.OnListItemViewClickListener<Co
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
                         isLoading = false
-                        onScrollListener.totalCount = movie.totalResults!!
-                        listAdapter.submitList(movie.contents!!)
+                        onScrollListener.totalCount = movie.totalPages!!
+                        listAdapter.data = movie.contents!!
+                        listAdapter.notifyDataSetChanged()
                         Log.e("eee dataUpcoming", movie.toString())
                         try {
                             loadingDialog!!.dismiss()

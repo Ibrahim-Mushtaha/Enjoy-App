@@ -2,6 +2,7 @@ package com.ix.ibrahim7.rxjavaapplication.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.network.MovieApi
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
@@ -32,10 +33,11 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
 
     var data: Movie? = null
 
-    var arrayList = ArrayList<Movie>()
-    var page = 1
+    val dataPopularMovie = arrayListOf<Content>()
 
-    fun getPopularMovie(language:String) {
+    fun getPopularMovie(language:String, page: Int) {
+        if (page == 1)
+            dataPopularMovie.clear()
         CoroutineScope(Dispatchers.IO).launch {
             dataPopularLiveData.postValue(ResultRequest.loading("loading"))
             val response = movieApi.getPopular(page,language)
@@ -43,10 +45,14 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
+                            if (dataPopularMovie.size > 0)
+                                dataPopularMovie.addAll(dataPopularMovie.size - 1, it.contents!!)
+                            else
+                                dataPopularMovie.addAll(it.contents!!)
+                            it.contents = dataPopularMovie
                             dataPopularLiveData.postValue(ResultRequest.success(it))
                             Log.e("popularMovieSuccess", it.toString())
                         }
-
                     } else {
                         Log.e("popularMovieErrorRequest", response.errorBody().toString())
                         dataPopularLiveData.postValue(
@@ -124,7 +130,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     fun getUpComingMovie(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataUpcomingLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getUpComing(page,language)
+            val response = movieApi.getUpComing(1,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -167,7 +173,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     fun getNowPlaying(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataNowPlayingLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getNowPlaying(page,language)
+            val response = movieApi.getNowPlaying(1,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -210,7 +216,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     fun getTopRated(language:String) {
         CoroutineScope(Dispatchers.IO).launch {
             dataTopRatedLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getTopRated(page,language)
+            val response = movieApi.getTopRated(1,language)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
