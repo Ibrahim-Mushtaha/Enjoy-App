@@ -25,8 +25,10 @@ class HomeViewModel @Inject constructor(
     var pagePopularMovie = 1
     var pageTrendingMovie = 1
     fun getPopularMovie(language:String) {
-        movieRepository.getPopularMovie(language,page = pagePopularMovie)
-        pagePopularMovie++
+        if (pagePopularMovie <= 3) {
+            movieRepository.getPopularMovie(language, page = pagePopularMovie)
+            pagePopularMovie++
+        }
     }
 
     fun getUpComingMovie(language:String) =  movieRepository.getUpComingMovie(language)
@@ -34,8 +36,10 @@ class HomeViewModel @Inject constructor(
     fun getTopRated(language:String) =  movieRepository.getTopRated(language)
     fun getMovieVideo(movieID: String, language:String) =  movieRepository.getMovieVideo(movieID,language)
     fun getTrendingMovie(language:String) {
-        movieRepository.getTrendingMovie(language,page = pageTrendingMovie)
-        pageTrendingMovie++
+        if (pageTrendingMovie <= 3) {
+            movieRepository.getTrendingMovie(language, page = pageTrendingMovie)
+            pageTrendingMovie++
+        }
     }
 
     init {
@@ -45,10 +49,6 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    override fun onCleared() {
-        super.onCleared()
-        onCleared()
-    }
 
 
 }

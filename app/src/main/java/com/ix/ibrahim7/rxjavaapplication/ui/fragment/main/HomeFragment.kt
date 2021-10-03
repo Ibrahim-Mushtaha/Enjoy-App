@@ -119,7 +119,6 @@ class HomeFragment : Fragment(),
             }
 
 
-
            btnMorePupuler.setOnClickListener {
                 val bundle = Bundle().apply {
                     putInt(TYPE,1)
@@ -136,7 +135,6 @@ class HomeFragment : Fragment(),
             }
 
             rcTrending.apply {
-                itemAnimator = DefaultItemAnimator()
                 adapter = trendingAdapter
                 addOnScrollListener(onScrollListener)
             }
@@ -170,7 +168,9 @@ class HomeFragment : Fragment(),
             viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
                 when(resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
-                        loadingDialog!!.show(childFragmentManager,"")
+                        try {
+                            loadingDialog!!.show(childFragmentManager, "")
+                        }catch (e:Exception){}
                     }
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
@@ -276,7 +276,7 @@ class HomeFragment : Fragment(),
                         mBinding.progressBar.visibility = View.GONE
                         if (isFirstLaunch){
                             isFirstLaunch = false
-                            trendingAdapter.notifyDataSetChanged()
+                            //trendingAdapter.notifyDataSetChanged()
                         }
                     }
                     ResultRequest.Status.ERROR -> {

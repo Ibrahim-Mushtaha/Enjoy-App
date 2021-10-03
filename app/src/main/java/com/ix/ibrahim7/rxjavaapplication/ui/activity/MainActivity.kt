@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                             LANG, AR)!!)
                         mbinding.bottomNavigation.visibility = View.GONE
                     }
-                    R.id.homeFragment-> {
+                    R.id.homeFragment, R.id.movieFragment2,R.id.tvShowFragment-> {
                         window.apply {
                             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
                         }
@@ -91,14 +91,6 @@ class MainActivity : AppCompatActivity() {
                         setLanguage(PreferencesManager(application).sharedPreference.getString(
                             LANG, AR)!!)
                         mbinding.bottomNavigation.visibility = View.GONE
-                    }
-                    R.id.movieFragment2,R.id.tvShowFragment-> {
-                        window.apply {
-                            clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-                        }
-                        setLanguage(PreferencesManager(application).sharedPreference.getString(
-                            LANG, AR)!!)
-                        mbinding.bottomNavigation.visibility = View.VISIBLE
                     }
                     else -> {
                         setLanguage(PreferencesManager(application).sharedPreference.getString(

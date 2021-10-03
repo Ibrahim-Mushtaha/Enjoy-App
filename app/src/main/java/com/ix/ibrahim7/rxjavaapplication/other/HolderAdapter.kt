@@ -52,7 +52,6 @@ object HolderAdapter {
                 .load(path)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_movie_placeholder)
                 .apply(RequestOptions().transform(CenterCrop()))
                 .into(view)
         } catch (e: Exception) {

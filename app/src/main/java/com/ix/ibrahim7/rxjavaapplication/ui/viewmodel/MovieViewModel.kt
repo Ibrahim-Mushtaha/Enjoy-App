@@ -19,20 +19,15 @@ class MovieViewModel @Inject constructor(
 
     var pageDiscoverMovie = 1
     fun getDiscoverMovie(language:String) {
-        movieRepository.getDiscoverMovie(language,page = pageDiscoverMovie)
-        pageDiscoverMovie++
+        if (pageDiscoverMovie <= 3) {
+            movieRepository.getDiscoverMovie(language, page = pageDiscoverMovie)
+            pageDiscoverMovie++
+        }
     }
 
 
     init {
         getDiscoverMovie(application.getApiLang())
     }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        onCleared()
-    }
-
 
 }
