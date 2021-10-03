@@ -36,6 +36,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
 
     val dataMovie = arrayListOf<Content>()
     val dataDiscoverMovie = arrayListOf<Content>()
+    val dataTrendingMovie = arrayListOf<Content>()
 
     fun getPopularMovie(language:String, page: Int) {
         if (page == 1)
@@ -308,14 +309,21 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
         }
     }
 
-    fun getTrendingMovie(language:String) {
+    fun getTrendingMovie(language:String,page: Int) {
+        if (page == 1)
+            dataTrendingMovie.clear()
         CoroutineScope(Dispatchers.IO).launch {
             dataTrendingLiveData.postValue(ResultRequest.loading("loading"))
-            val response = movieApi.getTrendingMovie(language = language)
+            val response = movieApi.getTrendingMovie(language = language,pageNumber = page)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
+                            if (dataTrendingMovie.size > 0)
+                                dataTrendingMovie.addAll(dataTrendingMovie.size - 1, it.contents!!)
+                            else
+                                dataTrendingMovie.addAll(it.contents!!)
+                            it.contents = dataTrendingMovie
                             dataTrendingLiveData.postValue(ResultRequest.success(it))
                             Log.e("trendingMovieSuccess", it.toString())
                         }

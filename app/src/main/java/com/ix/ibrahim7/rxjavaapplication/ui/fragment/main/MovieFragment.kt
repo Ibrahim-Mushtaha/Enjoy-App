@@ -82,7 +82,6 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
                     ResultRequest.Status.LOADING -> {
                         if (isFirstLaunch) {
                             loadingDialog!!.show(childFragmentManager, "")
-                            isFirstLaunch = false
                         }else {
                             mBinding.progressBar.visibility = View.VISIBLE
                         }
@@ -91,6 +90,10 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
                         val movie = resultResponse.data!! as Movie
                         onScrollListener.totalCount = movie.totalPages!!
                         movieAdapter.submitList(movie.contents!!)
+                        if (isFirstLaunch){
+                            isFirstLaunch = false
+                            movieAdapter.notifyDataSetChanged()
+                        }
                             try {
                                 loadingDialog!!.dismiss()
                             }catch (e:Exception) {}

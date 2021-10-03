@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -21,14 +22,17 @@ import com.ix.ibrahim7.rxjavaapplication.databinding.FragmentHomeBinding
 import com.ix.ibrahim7.rxjavaapplication.model.menu.MenuItem
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Content
 import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
+import com.ix.ibrahim7.rxjavaapplication.model.video.MovieVideo
 import com.ix.ibrahim7.rxjavaapplication.other.EnumConstant
 import com.ix.ibrahim7.rxjavaapplication.other.ONE
 import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
+import com.ix.ibrahim7.rxjavaapplication.ui.dialog.VideoPlayerDialog
 import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.TYPE
+import com.ix.ibrahim7.rxjavaapplication.util.OnScrollListener
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
 import com.ix.ibrahim7.rxjavaapplication.util.ZoomAnimation
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,27 +69,17 @@ class HomeFragment : Fragment(),
         GenericAdapter(R.layout.item_main_movie,BR.Movie,this)
     }
 
-
     private val trailerAdapter by lazy {
-        GenericAdapter(R.layout.item_trailer,BR.MovieTrailer,this)
+        GenericAdapter(R.layout.item_trailer,BR.MovieTrailer,object : GenericAdapter.OnListItemViewClickListener<Content>{
+            override fun onClickItem(itemViewModel: Content, type: Int) {
+                viewModel.getMovieVideo(itemViewModel.id.toString(), requireContext().getApiLang())
+                subscribeToMovieVideoObserver()
+            }
+        })
     }
 
-
     private val trendingAdapter by lazy {
-            GenericAdapter(R.layout.item_full_movie_width,BR.FullMovieDetails,
-                object :GenericAdapter.OnListItemViewClickListener<Content>{
-                    override fun onClickItem(itemViewModel: Content, type: Int) {
-                        when(type){
-                            1->{
-                                val bundle = Bundle().apply {
-                                    putInt(Constant.MOVIE_ID,itemViewModel.id!!.toInt())
-                                }
-                                findNavController().navigate(R.id.action_homeFragment_to_detailsFragment,bundle)
-                            }
-                        }
-                    }
-                }
-            )
+            GenericAdapter(R.layout.item_full_movie_width,BR.FullMovieDetails, this)
     }
 
     private val menuAdapter by lazy {
@@ -94,9 +88,12 @@ class HomeFragment : Fragment(),
 
     @Inject
     lateinit var viewModel: HomeViewModel
-    val array = ArrayList<Content>()
     private var loadingDialog : LoadingDialog ?= null
     private var selectedItemPos = 0
+    private var isFirstLaunch = true
+    private var isLoading = false
+    private var isLastPage = false
+    private var isScrolling = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -138,28 +135,33 @@ class HomeFragment : Fragment(),
                 adapter = trailerAdapter
             }
 
-            upcomingList.apply {
+            rcTrending.apply {
+                itemAnimator = DefaultItemAnimator()
                 adapter = trendingAdapter
+                addOnScrollListener(onScrollListener)
             }
+
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    Glide.with(requireActivity())
+                        .load(Constant.IMAGE_URL + sliderAdapter.differ.currentList[position].backdropPath)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .apply(bitmapTransform(BlurTransformation(16, 3)))
+                        .into(mBinding.tvImageSliderBackground)
+                }
+            })
+
         }
 
         subscribeToPopularObserver()
         subscribeToTrailerObserver()
         subscribeToTrendingObserver()
 
-        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                Glide.with(requireActivity())
-                    .load(Constant.IMAGE_URL + sliderAdapter.differ.currentList[position].backdropPath)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .apply(bitmapTransform(BlurTransformation(16, 3)))
-                    .into(mBinding.tvImageSliderBackground)
-            }
-        })
+
     }
 
     private fun subscribeToPopularObserver() {
@@ -264,27 +266,62 @@ class HomeFragment : Fragment(),
             viewModel.dataTrendingLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
                 when (resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
+                        mBinding.progressBar.visibility = View.VISIBLE
                     }
                     ResultRequest.Status.SUCCESS -> {
                         Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
-                        trendingAdapter.data = movie.contents!!
-                        trendingAdapter.notifyDataSetChanged()
+                        onScrollListener.totalCount = movie.totalPages!!
+                        trendingAdapter.submitList(movie.contents!!)
+                        mBinding.progressBar.visibility = View.GONE
+                        if (isFirstLaunch){
+                            isFirstLaunch = false
+                            trendingAdapter.notifyDataSetChanged()
+                        }
                     }
                     ResultRequest.Status.ERROR -> {
+                        mBinding.progressBar.visibility = View.GONE
                     }
                 }
             })
         }
     }
 
+    private fun subscribeToMovieVideoObserver() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.dataMovieVideoLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+                when (resultResponse.status) {
+                    ResultRequest.Status.LOADING -> {
+
+                    }
+                    ResultRequest.Status.SUCCESS -> {
+                        Log.e("eee data",resultResponse.data.toString())
+                        (resultResponse.data as MovieVideo).let { video ->
+                            if (!video.results.isNullOrEmpty())
+                            VideoPlayerDialog(video.results!![0].toString()).show(childFragmentManager,"")
+                        }
+
+                    }
+                    ResultRequest.Status.ERROR -> {
+                        Log.e("eee error movie video",resultResponse.message.toString())
+                    }
+                }
+            })
+        }
+    }
 
     private fun setUpViewpager() {
-        view_pager.apply {
+        mBinding.viewPager.apply {
             adapter = sliderAdapter
             setPageTransformer(ZoomAnimation())
         }
     }
+
+    private val onScrollListener =
+        OnScrollListener(isLoading, isLastPage, 0) {
+            viewModel.getTrendingMovie(requireContext().getApiLang())
+            isScrolling = false
+        }
 
     override fun onClickListener(menuitem: MenuItem, position: Int) {
         menuAdapter.data[selectedItemPos].isSelected=false

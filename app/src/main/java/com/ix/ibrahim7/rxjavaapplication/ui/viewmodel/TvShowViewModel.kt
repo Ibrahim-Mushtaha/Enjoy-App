@@ -25,7 +25,9 @@ class TvShowViewModel @Inject constructor(
     }
 
 
-
-
+    override fun onCleared() {
+        super.onCleared()
+        onCleared()
+    }
 
 }

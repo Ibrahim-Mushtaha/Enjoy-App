@@ -79,6 +79,8 @@ interface MovieApi {
 
     @GET("trending/movie/day")
     suspend fun getTrendingMovie(
+            @Query("page")
+            pageNumber: Int = 1,
             @Query("api_key")
             apiKey: String = API_KEY,
             @Query("language")

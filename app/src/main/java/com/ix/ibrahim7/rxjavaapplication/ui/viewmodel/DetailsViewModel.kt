@@ -1,7 +1,9 @@
 package com.ix.ibrahim7.rxjavaapplication.ui.viewmodel
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.ix.ibrahim7.rxjavaapplication.repository.MovieRepository
 import javax.inject.Inject
 
@@ -23,4 +25,9 @@ class DetailsViewModel @Inject constructor(
     fun getSimilarMovie(movieID: Int, language:String) =  movieRepository.getSimillerMovie(movieID,language)
     fun getMovieVideo(movieID: String, language:String) =  movieRepository.getMovieVideo(movieID,language)
 
+
+    override fun onCleared() {
+        super.onCleared()
+        onCleared()
+    }
 }

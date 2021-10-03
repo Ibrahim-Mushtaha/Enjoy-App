@@ -183,25 +183,36 @@
                     app:layout_constraintTop_toTopOf="@+id/textView2" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/upcoming_list"
+                    android:id="@+id/rcTrending"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginVertical="@dimen/margin_8"
+                    android:orientation="vertical"
                     android:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    tools:itemCount="6"
+                    tools:itemCount="1"
                     tools:listitem="@layout/item_full_movie_width" />
 
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/progressBar"
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="@dimen/size_36dp"
+                    android:layout_height="@dimen/size_36dp"
+                    android:visibility="visible"
+                    app:indicatorColor="@color/red"
+                    app:indicatorName="BallSpinFadeLoaderIndicator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rcTrending" />
 
                 <View
+                    android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="86dp"
-                    android:layout_marginTop="@dimen/margin_12"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/upcoming_list"
-                    app:layout_constraintTop_toBottomOf="@+id/upcoming_list" />
+                    app:layout_constraintStart_toStartOf="@+id/rcTrending"
+                    app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

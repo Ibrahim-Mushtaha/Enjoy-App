@@ -20,8 +20,10 @@ class HomeViewModel @Inject constructor(
     val dataNowPlayingLiveData = movieRepository.dataNowPlayingLiveData
     val dataTopRatedLiveData = movieRepository.dataTopRatedLiveData
     val dataTrendingLiveData = movieRepository.dataTrendingLiveData
+    val dataMovieVideoLiveData = movieRepository.dataMovieVideoLiveData
 
     var pagePopularMovie = 1
+    var pageTrendingMovie = 1
     fun getPopularMovie(language:String) {
         movieRepository.getPopularMovie(language,page = pagePopularMovie)
         pagePopularMovie++
@@ -30,7 +32,11 @@ class HomeViewModel @Inject constructor(
     fun getUpComingMovie(language:String) =  movieRepository.getUpComingMovie(language)
     fun getNowPlaying(language:String) =  movieRepository.getNowPlaying(language)
     fun getTopRated(language:String) =  movieRepository.getTopRated(language)
-    fun getTrendingMovie(language:String) =  movieRepository.getTrendingMovie(language)
+    fun getMovieVideo(movieID: String, language:String) =  movieRepository.getMovieVideo(movieID,language)
+    fun getTrendingMovie(language:String) {
+        movieRepository.getTrendingMovie(language,page = pageTrendingMovie)
+        pageTrendingMovie++
+    }
 
     init {
         getPopularMovie(application.getApiLang())
@@ -39,7 +45,10 @@ class HomeViewModel @Inject constructor(
     }
 
 
-
+    override fun onCleared() {
+        super.onCleared()
+        onCleared()
+    }
 
 
 }

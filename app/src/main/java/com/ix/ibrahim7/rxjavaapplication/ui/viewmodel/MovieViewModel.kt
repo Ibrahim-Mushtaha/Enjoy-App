@@ -29,7 +29,10 @@ class MovieViewModel @Inject constructor(
     }
 
 
-
+    override fun onCleared() {
+        super.onCleared()
+        onCleared()
+    }
 
 
 }
