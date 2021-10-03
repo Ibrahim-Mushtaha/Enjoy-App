@@ -22,6 +22,7 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
     val dataNowPlayingLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataTopRatedLiveData = MutableLiveData<ResultRequest<Any>>()
     val dataTrendingLiveData = MutableLiveData<ResultRequest<Any>>()
+    val dataDiscoverMovieLiveData = MutableLiveData<ResultRequest<Any>>()
 
     val dataTvShowLiveData = MutableLiveData<ResultRequest<Any>>()
 
@@ -33,11 +34,12 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
 
     var data: Movie? = null
 
-    val dataPopularMovie = arrayListOf<Content>()
+    val dataMovie = arrayListOf<Content>()
+    val dataDiscoverMovie = arrayListOf<Content>()
 
     fun getPopularMovie(language:String, page: Int) {
         if (page == 1)
-            dataPopularMovie.clear()
+            dataMovie.clear()
         CoroutineScope(Dispatchers.IO).launch {
             dataPopularLiveData.postValue(ResultRequest.loading("loading"))
             val response = movieApi.getPopular(page,language)
@@ -45,11 +47,11 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            if (dataPopularMovie.size > 0)
-                                dataPopularMovie.addAll(dataPopularMovie.size - 1, it.contents!!)
+                            if (dataMovie.size > 0)
+                                dataMovie.addAll(dataMovie.size - 1, it.contents!!)
                             else
-                                dataPopularMovie.addAll(it.contents!!)
-                            it.contents = dataPopularMovie
+                                dataMovie.addAll(it.contents!!)
+                            it.contents = dataMovie
                             dataPopularLiveData.postValue(ResultRequest.success(it))
                             Log.e("popularMovieSuccess", it.toString())
                         }
@@ -74,6 +76,56 @@ class MovieRepository @Inject constructor(val movieApi: MovieApi) {
                 } catch (t: Throwable) {
                     Log.e("popularMovieErrorThrowable", t.message.toString())
                     dataPopularLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+
+    fun getDiscoverMovie(language:String, page: Int) {
+        if (page == 1)
+            dataDiscoverMovie.clear()
+        CoroutineScope(Dispatchers.IO).launch {
+            dataDiscoverMovieLiveData.postValue(ResultRequest.loading("loading"))
+            val response = movieApi.getDiscoverMovie(page,language)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if (dataDiscoverMovie.size > 0)
+                                dataDiscoverMovie.addAll(dataDiscoverMovie.size - 1, it.contents!!)
+                            else
+                                dataDiscoverMovie.addAll(it.contents!!)
+                            it.contents = dataDiscoverMovie
+                            dataDiscoverMovieLiveData.postValue(ResultRequest.success(it))
+                            Log.e("discoverMovieSuccess", it.toString())
+                        }
+                    } else {
+                        Log.e("discoverMovieErrorRequest", response.errorBody().toString())
+                        dataDiscoverMovieLiveData.postValue(
+                            ResultRequest.error(
+                                "Ooops: ${response.errorBody()}",
+                                response
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    Log.e("discoverMovieErrorHttp", e.message().toString())
+                    dataDiscoverMovieLiveData.postValue(
+                        ResultRequest.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    Log.e("discoverMovieErrorThrowable", t.message.toString())
+                    dataDiscoverMovieLiveData.postValue(
                         ResultRequest.error(
                             "Ooops: ${t.message}",
                             t

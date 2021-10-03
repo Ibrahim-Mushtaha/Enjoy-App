@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.ix.ibrahim7.rxjavaapplication.BR
 import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.adapter.GenericAdapter
@@ -18,7 +19,7 @@ import com.ix.ibrahim7.rxjavaapplication.model.movie.Movie
 import com.ix.ibrahim7.rxjavaapplication.other.getApiLang
 import com.ix.ibrahim7.rxjavaapplication.other.setToolbarView
 import com.ix.ibrahim7.rxjavaapplication.ui.dialog.LoadingDialog
-import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.HomeViewModel
+import com.ix.ibrahim7.rxjavaapplication.ui.viewmodel.MovieViewModel
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import com.ix.ibrahim7.rxjavaapplication.util.OnScrollListener
 import com.ix.ibrahim7.rxjavaapplication.util.ResultRequest
@@ -37,7 +38,7 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
     }
 
     @Inject
-    lateinit var viewModel: HomeViewModel
+    lateinit var viewModel: MovieViewModel
     private var loadingDialog : LoadingDialog ?= null
     private var isFirstLaunch = true
     private var isLoading = false
@@ -60,11 +61,12 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
         with(mBinding){
 
             rcMovie.apply {
+                itemAnimator = DefaultItemAnimator()
                 adapter = movieAdapter
                 addOnScrollListener(onScrollListener)
             }
 
-            subscribeToPopularObserver()
+            subscribeToDiscoverObserver()
 
         }
 
@@ -72,10 +74,10 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
     }
 
 
-    private fun subscribeToPopularObserver() {
+    private fun subscribeToDiscoverObserver() {
 
         lifecycleScope.launchWhenStarted {
-            viewModel.dataPopularLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
+            viewModel.dataDiscoverMovieLiveData.observe(viewLifecycleOwner, Observer {resultResponse->
                 when(resultResponse.status) {
                     ResultRequest.Status.LOADING -> {
                         if (isFirstLaunch) {
@@ -86,19 +88,13 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
                         }
                     }
                     ResultRequest.Status.SUCCESS -> {
-                        Log.e("eee data",resultResponse.data.toString())
                         val movie = resultResponse.data!! as Movie
                         onScrollListener.totalCount = movie.totalPages!!
-                        movieAdapter.data = movie.contents!!
-                        movieAdapter.notifyDataSetChanged()
-                        if (!isFirstLaunch) {
+                        movieAdapter.submitList(movie.contents!!)
                             try {
                                 loadingDialog!!.dismiss()
                             }catch (e:Exception) {}
-                        }
-                        else {
                             mBinding.progressBar.visibility = View.GONE
-                        }
                         Log.e("eee dataUpcoming", movie.toString())
                     }
                     ResultRequest.Status.ERROR -> {
@@ -119,7 +115,7 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
 
     private val onScrollListener =
         OnScrollListener(isLoading, isLastPage, 0) {
-            viewModel.getPopularMovie(requireContext().getApiLang())
+            viewModel.getDiscoverMovie(requireContext().getApiLang())
             isScrolling = false
         }
 

@@ -41,6 +41,8 @@ class GenericAdapter<T>(
         get() = differ.currentList
         set(value) = differ.submitList(value)
 
+    fun submitList(list: List<T>?) = differ.submitList(list)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> {
         val layoutInflater = inflater ?: LayoutInflater.from(parent.context)
         val binding =

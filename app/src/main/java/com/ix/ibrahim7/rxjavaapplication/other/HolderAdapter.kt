@@ -7,6 +7,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.ix.ibrahim7.rxjavaapplication.R
 import com.ix.ibrahim7.rxjavaapplication.util.Constant
 import java.lang.Exception
 
@@ -51,6 +52,7 @@ object HolderAdapter {
                 .load(path)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.ic_movie_placeholder)
                 .apply(RequestOptions().transform(CenterCrop()))
                 .into(view)
         } catch (e: Exception) {

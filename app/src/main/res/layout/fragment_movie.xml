@@ -7,57 +7,62 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbarLayout"
+        layout="@layout/toolbar_layout" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple">
-
-        <include
-            android:id="@+id/toolbarLayout"
-            layout="@layout/toolbar_layout" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/purple"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcMovie"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toTopOf="@+id/progressBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:spanCount="3"
-                tools:itemCount="12"
-                tools:listitem="@layout/item_movie" />
-
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/progressBar"
-                style="@style/AVLoadingIndicatorView"
-                android:layout_width="@dimen/size_36dp"
-                android:layout_height="@dimen/size_36dp"
-                android:visibility="gone"
-                app:indicatorColor="@color/red"
-                app:indicatorName="BallSpinFadeLoaderIndicator"
-                app:layout_constraintBottom_toTopOf="@+id/view2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="0dp"
-                android:layout_height="86dp"
+                android:background="@color/purple"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/rcMovie"
-                app:layout_constraintStart_toStartOf="@+id/rcMovie" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/toolbarLayout">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@+id/progressBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spanCount="3"
+                    tools:listitem="@layout/item_movie" />
+
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/progressBar"
+                    style="@style/AVLoadingIndicatorView"
+                    android:layout_width="@dimen/size_36dp"
+                    android:layout_height="@dimen/size_36dp"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/red"
+                    app:indicatorName="BallSpinFadeLoaderIndicator"
+                    app:layout_constraintBottom_toTopOf="@+id/view2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="86dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/rcMovie"
+                    app:layout_constraintStart_toStartOf="@+id/rcMovie" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

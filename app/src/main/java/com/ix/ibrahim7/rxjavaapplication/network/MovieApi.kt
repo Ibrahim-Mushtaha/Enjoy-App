@@ -20,6 +20,17 @@ interface MovieApi {
             apiKey: String = API_KEY
     ): Response<Movie>
 
+
+    @GET("discover/movie")
+    suspend fun getDiscoverMovie(
+        @Query("page")
+        pageNumber: Int = 1,
+        @Query("language")
+        language: String = "en-US",
+        @Query("api_key")
+        apiKey: String = API_KEY
+    ): Response<Movie>
+
     @GET("movie/upcoming")
     suspend fun getUpComing(
             @Query("page")
