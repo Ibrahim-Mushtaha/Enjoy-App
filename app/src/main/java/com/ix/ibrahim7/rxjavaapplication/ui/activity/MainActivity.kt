@@ -7,7 +7,6 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.ix.ibrahim7.rxjavaapplication.R
@@ -15,7 +14,6 @@ import com.ix.ibrahim7.rxjavaapplication.databinding.ActivityMainBinding
 import com.ix.ibrahim7.rxjavaapplication.other.*
 import com.ix.ibrahim7.rxjavaapplication.other.getDefaultLang
 import com.ix.ibrahim7.rxjavaapplication.other.getNavOptions
-import kotlinx.android.synthetic.main.activity_main.*
 import com.ix.ibrahim7.rxjavaapplication.util.Constant.setUpStatusBar
 import com.ix.ibrahim7.rxjavaapplication.util.PreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,9 +30,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(mbinding.root)
         window.apply {
             getDefaultLang{ lang->
-                if (!PreferencesManager(application).sharedPreference.getBoolean(PICKLANG,false)) {
+                if (!PreferencesManager(application).sharedPreference.getBoolean(PICK_LANG,false)) {
                     PreferencesManager(application).editor.putString(LANG, lang).apply()
-                    PreferencesManager(application).editor.putBoolean(PICKLANG, true).apply()
+                    PreferencesManager(application).editor.putBoolean(PICK_LANG, true).apply()
                 }
             }
         }

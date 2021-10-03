@@ -1,15 +1,10 @@
 package com.ix.ibrahim7.rxjavaapplication.other
 
-const val ZERO = 0
 const val ONE = 1
 const val TWO = 2
 
 const val BASE_URL = "https://api.themoviedb.org/3/"
-const val ACCESSTOKEN = "AccessTOKEN"
-const val APPLICATIONJSON = "application/json"
-const val CONTENT_TYPE = "text/plain"
-const val PICKLANG = "picklang"
-const val ALERT = "alert"
+const val PICK_LANG = "picklang"
 const val LANG = "lang"
 const val EN = "en"
 const val AR = "ar"
