@@ -98,7 +98,7 @@ class MovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Con
                                 loadingDialog!!.dismiss()
                             }catch (e:Exception) {}
                             mBinding.progressBar.visibility = View.GONE
-                        Log.e("eee dataUpcoming", movie.toString())
+                        Log.e("eee Discover", movie.toString())
                     }
                     ResultRequest.Status.ERROR -> {
                         if (!isFirstLaunch) {
