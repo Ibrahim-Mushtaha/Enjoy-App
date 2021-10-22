@@ -62,9 +62,14 @@ Movie App is a sample Android project using <a href="https://www.themoviedb.org/
 
 <pre>
 <p><span>dependencies</span> {
-implementation <span><span>'</span>io.reactivex.rxjava3:rxandroid:3.0.0'</span></span>
-implementation <span><span>'</span>io.reactivex.rxjava3:rxjava:3.0.0'</span></span>
-implementation <span><span>'</span>com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0'</span></span>
+
+implementation <span><span>'</span>com.google.dagger:hilt-android:2.32-alpha'</span></span>
+kapt <span><span>'</span>com.google.dagger:hilt-android-compiler:2.28.3-alpha'</span></span>
+implementation <span><span>'</span>androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'</span></span>
+
+implementation <span><span>'</span>com.squareup.retrofit2:retrofit:2.9.0'</span></span>
+implementation <span><span>'</span>com.squareup.retrofit2:converter-gson:2.9.0'</span></span>
+
 }</p></pre>
 </ul>
 
